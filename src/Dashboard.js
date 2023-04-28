@@ -18,11 +18,7 @@ export const Dashboard = () => {
         fetch("http://localhost:8080/book/all")
         .then(res => res.json())
         .then(data => {
-            var arr = [];
-            for (var i = 0; i < data.length; i++) {
-                arr.push(data[i]);
-            }
-            setBookData(arr)
+            setBookData(data)
         })
     }, [])
 
