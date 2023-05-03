@@ -1,17 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export const CreateBook = ({fetchBooks}) => {
+export const CreateBook = ({data, isbn, alert}) => {
 
     const emptyBook = {
         title: "",
-        ISBN: "",
-        image: ""
+        isbn: "",
+        image: "",
+        author: ""
     }
 
     const [newBook, setNewBook] = useState(emptyBook)
+
+    useEffect(() => {
+        if(data){
+            setNewBook({
+                title: data.title,
+                isbn: isbn,
+                image: data.cover.medium,
+                author: showAuthors()
+            })
+        } 
+        if(alert === true){
+            setNewBook(emptyBook)
+        }
+    }, [data, alert])
+
+    const showAuthors = () => {
+        let authorString = data.authors[0].name
+        for(let i = 1; i < data.authors.length; i++){
+            authorString += ", " + data.authors[i].name
+        }
+        return authorString
+    }
+
+    const imageElement = data ? <img src={data.cover.medium}></img> : null
 
     const setTitle = (i) => {
         setNewBook({
@@ -20,10 +45,10 @@ export const CreateBook = ({fetchBooks}) => {
         })
     }
 
-    const setISBN = (i) => {
+    const setIsbn = (i) => {
         setNewBook({
             ...newBook,
-            ISBN: i
+            isbn: i
         })
     }
 
@@ -34,7 +59,15 @@ export const CreateBook = ({fetchBooks}) => {
         })
     }
 
+    const setAuthor = (i) => {
+        setNewBook({
+            ...newBook,
+            author: i
+        })
+    }
+
     const handleSubmit = (e) => {
+        console.log(newBook)
         e.preventDefault();
         try {
             const requestOptions = {
@@ -50,9 +83,7 @@ export const CreateBook = ({fetchBooks}) => {
                 console.log(r)
                 r.json()})
             .then(d => {
-                console.log(d)
                 setNewBook(emptyBook)
-                fetchBooks()
             })
             // .then((d) => console.log("Success:", d))
         } catch (error) {
@@ -69,14 +100,19 @@ export const CreateBook = ({fetchBooks}) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="book-title">Book ISBN</label>
-                    <input value={newBook.ISBN} onChange={(e) => setISBN(e.target.value)} id="book-ISBN" type="text" className="form-control" placeholder="ISBN number"></input>
+                    <input value={newBook.isbn} onChange={(e) => setIsbn(e.target.value)} id="book-ISBN" type="text" className="form-control" placeholder="ISBN number"></input>
+                </div>
+                <div>
+                    <label htmlFor="book-author">Book Author</label>
+                    <input value={newBook.author} onChange={(e) => setAuthor(e.target.value)} id="book-author" type="text" className="form-control" placeholder="Book image URL"></input>
                 </div>
                 <div>
                     <label htmlFor="book-title">Image URL</label>
                     <input value={newBook.image} onChange={(e) => setImage(e.target.value)} id="book-image" type="text" className="form-control" placeholder="Book image URL"></input>
                 </div>
-                <Button type="submit" className="mt-2" variant="success">Register</Button>
+                <Button type="submit" className="mt-2" variant="success">Save Book</Button>
             </form>
+            {imageElement}
         </div>
     )
 }
