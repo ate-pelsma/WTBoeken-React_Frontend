@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-export const Book = (props) => {
+export const Book = ({book}) => {
 
-    const {archived, id, image, isbn, reservations, stock, title} = props.book
-    reservations.map(r => console.log(r))
+    const {archived, id, image, isbn, reservations, stock, title} = book
     return (
         <div>
             <h1>{title}</h1>
