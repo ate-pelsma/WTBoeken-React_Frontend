@@ -1,8 +1,3 @@
-window.onload = function(){
-    fetch("http://localhost:8080/user/all")
-        .then(q => q.json())           
-}
-
 export function validateEmail(){
     const emailInput = document.getElementById("email").value;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -30,8 +25,7 @@ export function makeAccount(){
             console.log("toevoegen gelukt");
         }
     }
-    xhr.open('POST', 'http://localhost:8080/user/save', true);
+    xhr.open('POST', '/user/save', true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(deJSON);
-
 }

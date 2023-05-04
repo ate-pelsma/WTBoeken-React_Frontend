@@ -1,6 +1,6 @@
 import React from 'react';
-import {validateEmail} from '../public/createUser';
 import './signup.css';
+import { SendLogin } from '../public/login';
 
 export default function Login(){
     return(
@@ -12,14 +12,13 @@ export default function Login(){
                 </div>
                 <h2>Login</h2>
                     <span></span>
-                    <input type="text" autoFocus placeholder="E-mail" id="email" className="inputfield" />
+                    <input type="username" autoFocus placeholder="E-mail" id="username" className="inputfield"/>
                     <span></span>
-                    <input type="text" autoFocus placeholder="Password" id="password" className="inputfield" />
+                    <input type="password" autoFocus placeholder="Password" id="password" className="inputfield"/>
                     <span>Forgot your password?</span>
-                    <button onClick={validateEmail}>Login</button>
+                    <button type="button" onClick={SendLogin}>Login</button>
                 </div>
             </div>
         </div>
-        
     )
   }
