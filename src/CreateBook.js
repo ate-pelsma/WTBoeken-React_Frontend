@@ -14,7 +14,7 @@ export const CreateBook = ({data, isbn, alert}) => {
 
     const [newBook, setNewBook] = useState(emptyBook)
 
-    useEffect(() => {
+    const updateBookForm = () => {
         if(data){
             setNewBook({
                 title: data.title,
@@ -26,6 +26,10 @@ export const CreateBook = ({data, isbn, alert}) => {
         if(alert === true){
             setNewBook(emptyBook)
         }
+    }
+
+    useEffect(() => {
+        updateBookForm()
     }, [data, alert])
 
     const showAuthors = () => {

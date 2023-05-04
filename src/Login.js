@@ -3,14 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { AppContext } from "./App";
 
 export const Login = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
-    const { authenticated, setAuthenticated } = useContext(AppContext)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +27,6 @@ export const Login = () => {
         const account = data.find(user => user.email === email)
         let foundUser = false
         if (account && account.password === password){
-            setAuthenticated(true)
             foundUser = true
             navigate("/")
         }
