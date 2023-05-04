@@ -3,13 +3,30 @@ import { Book } from "./Book";
 import { SearchIsbn } from "./SearchIsbn";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { NavLink } from "react-router-dom";
+import { SearchBar } from "./SearchBar";
 
 export const BookView = () => {
 
-    const [bookData, setBookData] = useState("")
+    const [bookData, setBookData] = useState([])
     const [createBook, setCreateBook] = useState(false)
+    const [searchInput, setSearchInput] = useState("")
 
-    const bookElements = Array.isArray(bookData) && bookData.map(book => {
+    const tableArray = ["afbeelding", "titel", "auteur", "isbn", "aantal", "tags"]
+    const tableNames = tableArray.map(i => {
+        return (
+            <th scope="col">{i}</th>
+        )
+    })
+
+    const createBookElements = () => {
+        const currentList = bookData.filter((book) => {
+            return book.title.toLowerCase().includes(searchInput.toLowerCase())
+        })
+        return currentList
+    }
+
+    const bookElements = Array.isArray(bookData) && createBookElements().map(book => {
         return (
             <Book key={book.id} book={book} />
         )
@@ -36,14 +53,32 @@ export const BookView = () => {
     }, [])
 
     return (
-        <div>
+        <div className="container">
             <h2>Welcome to the book catalogus page</h2>
-            <div className="d-flex flex-row">
-                {bookElements}
+            
+                <div className="row">
+                    <div className="col-8 justify-content-center">
+                    <div className="ms-4">
+                        <input type="text" onChange={(e) => setSearchInput(e.target.value)} placeholder="search for title here"></input>
+                    </div>
+                    </div>
+                    <div className="col-4 d-flex flex-row-reverse">
+                        <button><NavLink to="/books/create">Add New Book</NavLink></button> 
+                    </div>
+                
             </div>
-            <p></p>
-            <button onClick={handleClick}>Add New Book</button>
-            <SearchIsbn createBook={createBook}/>
+            <div className="p-4">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            {tableNames}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {bookElements}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 } 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CreateBook } from "./CreateBook";
 
-export const SearchIsbn = ({createBook}) => {
+export const SearchIsbn = () => {
     
     const [bookObject, setBookObject] = useState(null)
     const [currentIsbn, setCurrentIsbn] = useState("")
@@ -23,15 +23,18 @@ export const SearchIsbn = ({createBook}) => {
             })
     }
 
-    const visibility = createBook ? {visibility: 'visible'} : {visibility: 'hidden'}
-    const alertElement = alert ? <div>Alert message</div> : <div></div>
+    const alertElement = alert ? <div className="text-center" role="alert"><p className="fs-6">Onbekend ISBN nummer</p></div> : <div></div>
 
     return (
-        <div style={visibility}>
-            <input value={currentIsbn} onChange={(e) => setCurrentIsbn(e.target.value)} type="text" placeholder="type isbn here"></input>
-            <button type="button" onClick={fetchData}></button>
-            {alertElement}
-            <CreateBook data={bookObject} isbn={currentIsbn} alert={alert} />
+        <div className="container">
+            <div>
+                <input value={currentIsbn} onChange={(e) => setCurrentIsbn(e.target.value)} type="text" placeholder="type isbn here"></input>
+                <button type="button" onClick={fetchData}>Search ISBN number</button>
+                {alertElement}
+            </div>
+            <div>
+                <CreateBook data={bookObject} isbn={currentIsbn} alert={alert} />
+            </div>
         </div>
     )
 }

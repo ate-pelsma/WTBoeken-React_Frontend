@@ -2,19 +2,21 @@ import React, { useState } from "react";
 
 export const Book = ({book}) => {
 
-    const {archived, id, image, isbn, reservations, stock, title} = book
-    console.log(book)
-    const subTitle = book.subtitle ? book.subtitle : ""
+    const {id, author, image, isbn, tags, stock, title} = book
+
+    const handleClick = () => {
+        window.location.href = `/books/details/${id}`
+    }
+
     return (
-        <div className="container offset-md-1">
-            <div>
-                <img src={image}></img>
-            </div>
-            <div>
-                {title}
-                <p>{subTitle}</p>
-            </div>
-        </div>
+        <tr onClick={handleClick}>
+            <td><img src={image} style={{width: "50px"}}></img></td>
+            <td>{title}</td>
+            <td>{author}</td>
+            <td>{isbn}</td>
+            <td>{stock}</td>
+            <td>{tags}</td>
+        </tr>
     )
 
 }
