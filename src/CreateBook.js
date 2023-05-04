@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Redirect } from "react-router-dom";
 
 export const CreateBook = ({data, isbn, alert}) => {
 
@@ -14,10 +15,11 @@ export const CreateBook = ({data, isbn, alert}) => {
 
     const [newBook, setNewBook] = useState(emptyBook)
 
-    useEffect(() => {
+    const updateBookForm = () => {
         if(data){
+            let subtitle = data.subtitle ? data.subtitle : ""
             setNewBook({
-                title: data.title,
+                title: data.title + " " + subtitle,
                 isbn: isbn,
                 image: data.cover.medium,
                 author: showAuthors()
@@ -26,6 +28,10 @@ export const CreateBook = ({data, isbn, alert}) => {
         if(alert === true){
             setNewBook(emptyBook)
         }
+    }
+
+    useEffect(() => {
+        updateBookForm()
     }, [data, alert])
 
     const showAuthors = () => {
@@ -81,9 +87,10 @@ export const CreateBook = ({data, isbn, alert}) => {
             fetch("http://localhost:8080/book/save", requestOptions)
             .then((r) => {
                 console.log(r)
-                r.json()})
+                r.json()
+            })
             .then(d => {
-                setNewBook(emptyBook)
+                window.location.href = '/'
             })
             // .then((d) => console.log("Success:", d))
         } catch (error) {

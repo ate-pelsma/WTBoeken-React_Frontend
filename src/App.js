@@ -1,25 +1,30 @@
-import React, {useContext, useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from "./Login";
 import { Register } from "./Register";
-import { Dashboard } from './Dashboard';
-
-export const AppContext = React.createContext()
+import { NavBar } from './NavBar';
+import { BookView } from './BookView';
+import { UserView } from './UserView';
+import { SearchIsbn } from './SearchIsbn';
+import { BookDetails } from './BookDetails';
 
 function App() {
 
-  const [authenticated, setAuthenticated] = useState(true)
   return (
     <div className="App">
-      <AppContext.Provider value={ { authenticated, setAuthenticated } }>
         <Router>
+          <NavBar />
           <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<BookView />} />
               <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/books" element={<BookView />} />
+              <Route path="/books/create" element={<SearchIsbn />} />
+              <Route path='/books/details/:id' element={<BookDetails />} />
+              <Route path="/users" element={<UserView />} />
+
           </Routes>
         </Router>
-      </AppContext.Provider>
     </div>
   );
 }
