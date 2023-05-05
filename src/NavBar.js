@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { BookView } from "./BookView";
-import { UserView } from "./UserView";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import {Link} from "react-router-dom";
 
-export const NavBar = () => {
-    
-    // STAP 1 bepaal wie de user is: ADMIN OF USER
-    // stap 2 genereer de jusite navbar items
-
-    return (
-        <div>
-            {/* <button onClick={(e) => setBookView(prev => !prev)}>Book Overview</button> */}
-            <NavLink to={"/books"}>Book Overview</NavLink>
-            <NavLink to={"/users"}>User Overview</NavLink>
-            {/* <button onClick={(e) => setUserView(prev => !prev)}>User Overview</button> */}
-            {/* <BookCatalogus visible={bookView}/>
-            <UserView visible={userView} /> */}
-        </div>
-    )
+export default function NavBar()
+{
+  return(
+    <header>
+      <nav className="navbar">
+          <img src={require('./images/WorkingTalentLogo.png')} alt="Workingtalent Logo" className="logo"/>
+          <ul className="nav-links">
+            {/* <li><Link to="/Catalogus" >Catalogus</Link></li>
+            <li><Link to="/MyReservations" >Mijn Reserveringen</Link></li>
+            <li><Link to="/MyAccount" >Mijn Account</Link></li> */}
+            <li><Link to="/books" >Boekenoverzicht</Link></li>
+            <li><Link to="/register" >Gebruikers overzicht</Link></li>
+            {/* <li><Link to="/ReservationsSummary">Reserveringen overzicht</Link></li> */}
+          </ul>
+      </nav>
+    </header>
+  )
 }
