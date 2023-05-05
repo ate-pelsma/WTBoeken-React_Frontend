@@ -24,14 +24,18 @@ export default function Login(){
             body: deJSON
         })
         .then((response) => {
-            if(response.status === 200)
-                return Promise.all([response.json(), response.headers])
+            if(response.status === 200){
+                console.log(response);
+                return response.json();
+            }
             else
                 return Promise.reject("Invalid login attempt");
         })
-        .then(([body, headers]) => {
-            setJwt(headers.get("authorization"));
-            window.location.href = "Home";
+        .then((body) => {
+            console.log(body.authorization);
+            console.log(body.user);
+            setJwt(body.authorization);
+            window.location.href = "books/";
         })
         .catch((message) => {
             alert(message);
