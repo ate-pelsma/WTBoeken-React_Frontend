@@ -15,6 +15,7 @@ export default function Login(){
         newLoginAttempt.username = username;
         newLoginAttempt.password = password;
         var deJSON = JSON.stringify(newLoginAttempt);
+        console.log(deJSON)
 
         fetch('http://localhost:8080/login',{
             method: 'POST',
@@ -31,11 +32,17 @@ export default function Login(){
             else
                 return Promise.reject("Invalid login attempt");
         })
+<<<<<<< HEAD
         .then((body) => {
             console.log(body.authorization);
             console.log(body.user);
             setJwt(body.authorization);
             window.location.href = "books/";
+=======
+        .then(([body, headers]) => {
+            setJwt(headers.get("authorization"));
+            window.location.href = "/books";
+>>>>>>> main
         })
         .catch((message) => {
             alert(message);
