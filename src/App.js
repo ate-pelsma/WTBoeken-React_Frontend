@@ -22,7 +22,14 @@ function App() {
               <Route path="/books/create" element={<SearchIsbn />} />
               <Route path='/books/details/:id' element={<BookDetails />} />
               <Route path="/users" element={<UserView />} />
+<<<<<<< HEAD
               {/* <Route path="/reservations" element={<Reservations />} /> */}
+=======
+<<<<<<< HEAD
+=======
+              {/* <Route path="/reservations" element={<Reservations />} /> */}
+>>>>>>> featureGeoffry
+>>>>>>> main
           </Routes>
         </Router>
     </div>
