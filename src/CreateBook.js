@@ -17,17 +17,26 @@ export const CreateBook = ({data, isbn, alert}) => {
 
     const updateBookForm = () => {
         if(data){
+            const imgUrl = data.cover ? data.cover.medium : ""
             let subtitle = data.subtitle ? data.subtitle : ""
             setNewBook({
                 title: data.title + " " + subtitle,
                 isbn: isbn,
-                image: data.cover.medium,
+                image: imgUrl,
                 author: showAuthors()
             })
+
+            buildImgElement()
         } 
         if(alert === true){
             setNewBook(emptyBook)
         }
+    }
+
+    const buildImgElement = () => {
+        console.log(newBook.image)
+        const imgElement = newBook.image ? <img src={newBook.image} alt="No Image"></img> : <div></div>
+        return imgElement
     }
 
     useEffect(() => {
@@ -41,8 +50,6 @@ export const CreateBook = ({data, isbn, alert}) => {
         }
         return authorString
     }
-
-    const imageElement = data ? <img src={data.cover.medium}></img> : null
 
     const setTitle = (i) => {
         setNewBook({
@@ -119,7 +126,8 @@ export const CreateBook = ({data, isbn, alert}) => {
                 </div>
                 <Button type="submit" className="mt-2" variant="success">Save Book</Button>
             </form>
-            {imageElement}
+            {buildImgElement()}
+
         </div>
     )
 }
