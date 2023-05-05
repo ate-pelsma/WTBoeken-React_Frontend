@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Redirect } from "react-router-dom";
 
 export const CreateBook = ({data, isbn, alert}) => {
 
