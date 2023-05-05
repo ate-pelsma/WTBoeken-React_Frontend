@@ -15,6 +15,7 @@ export default function Login(){
         newLoginAttempt.username = username;
         newLoginAttempt.password = password;
         var deJSON = JSON.stringify(newLoginAttempt);
+        console.log(deJSON)
 
         fetch('http://localhost:8080/login',{
             method: 'POST',
@@ -31,7 +32,7 @@ export default function Login(){
         })
         .then(([body, headers]) => {
             setJwt(headers.get("authorization"));
-            window.location.href = "Home";
+            window.location.href = "/books";
         })
         .catch((message) => {
             alert(message);
