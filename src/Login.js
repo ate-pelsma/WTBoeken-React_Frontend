@@ -1,52 +1,71 @@
-import React, {useContext, useState} from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button'
+import { useState } from 'react';
+import { useLocalState } from './utils/setLocalStorage'
+import './style/signup.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+export default function Login(){
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-export const Login = () => {
+    const [jwt, setJwt] = useLocalState("", "jwt");
+    console.log(username)
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const navigate = useNavigate();
+    function SendLogin() {
+    if(!jwt){
+        var newLoginAttempt = {};
+        newLoginAttempt.username = username;
+        newLoginAttempt.password = password;
+        var deJSON = JSON.stringify(newLoginAttempt);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        fetchUsers();
-    }
-
-    const fetchUsers = () => {
-        fetch("http://localhost:8080/user/all")
-        .then(response => response.json())
-        .then(data => {
-            authenticateUser(data)
+        fetch('http://localhost:8080/login',{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: deJSON
+        })
+        .then((response) => {
+            if(response.status === 200)
+                return Promise.all([response.json(), response.headers])
+            else
+                return Promise.reject("Invalid login attempt");
+        })
+        .then(([body, headers]) => {
+            setJwt(headers.get("authorization"));
+            window.location.href = "Home";
+        })
+        .catch((message) => {
+            alert(message);
         })
     }
 
-    const authenticateUser = (data) => {
-        const account = data.find(user => user.email === email)
-        let foundUser = false
-        if (account && account.password === password){
-            foundUser = true
-            navigate("/")
-        }
-        if(!foundUser) alert("Credentials unknown")
     }
 
-    return (
-        <div className="container">
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="login-mail">email</label>
-                    <input value={email} onChange={(e) => setEmail(e.target.value)} id="login-mail" type="email" className="form-control" placeholder="youremail@email.com"></input>
+    return(
+        <div className="Main">
+            <div className="SignUpField">
+                <div className="FormContainer">
+                <div className="LoginTitle">
+                <img src={require('./images/WorkingTalentTegel.png')} alt="React Logo" className="LoginLogo"/>
                 </div>
-                <div className="form-group">
-                    <label>password</label>
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" placeholder="**********"></input>
+                <h2>Login</h2>
+                    <span></span>
+                    <input type="username" 
+                    autoFocus placeholder="E-mail" 
+                    value={username} 
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="inputfield"/>
+
+                    <span></span>
+                    <input type="password" 
+                    autoFocus placeholder="Password" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="inputfield"/>
+
+                    <span>Forgot your password?</span>
+                    <button type="button" onClick={SendLogin}>Login</button>
                 </div>
-                <Button type="submit" className="mt-2" variant="success">Log in</Button>
-            </form>
-            <Link to="/register">Create Account</Link>
+            </div>
         </div>
     )
-}
+  }

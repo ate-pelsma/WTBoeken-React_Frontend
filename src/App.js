@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Login } from "./Login";
+import Login from "./Login";
 import { Register } from "./Register";
-import { NavBar } from './NavBar';
+import NavBar from './NavBar';
 import { BookView } from './BookView';
 import { UserView } from './UserView';
 import { SearchIsbn } from './SearchIsbn';
@@ -22,7 +22,7 @@ function App() {
               <Route path="/books/create" element={<SearchIsbn />} />
               <Route path='/books/details/:id' element={<BookDetails />} />
               <Route path="/users" element={<UserView />} />
-
+              {/* <Route path="/reservations" element={<Reservations />} /> */}
           </Routes>
         </Router>
     </div>
