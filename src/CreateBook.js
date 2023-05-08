@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const CreateBook = ({data, isbn, alert}) => {
 
@@ -10,20 +10,23 @@ export const CreateBook = ({data, isbn, alert}) => {
         title: "",
         isbn: "",
         image: "",
-        author: ""
+        author: "",
+        stock: 0
     }
 
     const [newBook, setNewBook] = useState(emptyBook)
+    const navigate = useNavigate();
 
     const updateBookForm = () => {
         if(data){
-            const imgUrl = data.cover ? data.cover.medium : ""
+            const imgUrl = data.cover ? data.cover.medium : "https://images.cdn3.stockunlimited.net/preview1300/book-icon_1648785.jpg"
             let subtitle = data.subtitle ? data.subtitle : ""
             setNewBook({
                 title: data.title + " " + subtitle,
                 isbn: isbn,
                 image: imgUrl,
-                author: showAuthors()
+                author: showAuthors(),
+                stock: 1
             })
 
             buildImgElement()
@@ -34,8 +37,7 @@ export const CreateBook = ({data, isbn, alert}) => {
     }
 
     const buildImgElement = () => {
-        console.log(newBook.image)
-        const imgElement = newBook.image ? <img src={newBook.image} alt="No Image"></img> : <div></div>
+        const imgElement = newBook.image ? <img src={newBook.image} alt="No Image" style={{width: "300px"}}></img> : <div></div>
         return imgElement
     }
 
@@ -79,8 +81,14 @@ export const CreateBook = ({data, isbn, alert}) => {
         })
     }
 
+    const setStock = (i) => {
+        setNewBook({
+            ...newBook,
+            stock: i
+        })
+    }
+
     const handleSubmit = (e) => {
-        console.log(newBook)
         e.preventDefault();
         try {
             const requestOptions = {
@@ -93,11 +101,10 @@ export const CreateBook = ({data, isbn, alert}) => {
 
             fetch("http://localhost:8080/book/save", requestOptions)
             .then((r) => {
-                console.log(r)
                 r.json()
             })
             .then(d => {
-                window.location.href = '/'
+                navigate("/")
             })
             // .then((d) => console.log("Success:", d))
         } catch (error) {
@@ -109,20 +116,24 @@ export const CreateBook = ({data, isbn, alert}) => {
         <div>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <div className="form-group">
-                    <label htmlFor="book-title">Book Title</label>
-                    <input value={newBook.title} onChange={(e) => setTitle(e.target.value)} id="book-title" type="text" className="form-control" placeholder="Book Title"></input>
+                    <label htmlFor="book-title">Boek Titel</label>
+                    <input value={newBook.title} onChange={(e) => setTitle(e.target.value)} id="book-title" type="text" className="form-control" placeholder="Titel"></input>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="book-title">Book ISBN</label>
-                    <input value={newBook.isbn} onChange={(e) => setIsbn(e.target.value)} id="book-ISBN" type="text" className="form-control" placeholder="ISBN number"></input>
+                    <label htmlFor="book-title">Boek ISBN</label>
+                    <input value={newBook.isbn} onChange={(e) => setIsbn(e.target.value)} id="book-ISBN" type="text" className="form-control" placeholder="ISBN nummer"></input>
                 </div>
                 <div>
-                    <label htmlFor="book-author">Book Author</label>
-                    <input value={newBook.author} onChange={(e) => setAuthor(e.target.value)} id="book-author" type="text" className="form-control" placeholder="Book image URL"></input>
+                    <label htmlFor="book-author">Boek Auteur</label>
+                    <input value={newBook.author} onChange={(e) => setAuthor(e.target.value)} id="book-author" type="text" className="form-control" placeholder="Auteur"></input>
                 </div>
                 <div>
-                    <label htmlFor="book-title">Image URL</label>
-                    <input value={newBook.image} onChange={(e) => setImage(e.target.value)} id="book-image" type="text" className="form-control" placeholder="Book image URL"></input>
+                    <label htmlFor="book-title">Afbeelding URL</label>
+                    <input value={newBook.image} onChange={(e) => setImage(e.target.value)} id="book-image" type="text" className="form-control" placeholder="Afbeelding URL"></input>
+                </div>
+                <div>
+                    <label htmlFor="book-stock">Aantal</label>
+                    <input value={newBook.stock} onChange={(e) => setStock(e.target.value)} id="book-stock" type="number" min="0" className="form-control" placeholder="Aantal exemplaren"></input>
                 </div>
                 <Button type="submit" className="mt-2" variant="success">Save Book</Button>
             </form>
