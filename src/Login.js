@@ -32,17 +32,9 @@ export default function Login(){
             else
                 return Promise.reject("Invalid login attempt");
         })
-<<<<<<< HEAD
-        .then((body) => {
-            console.log(body.authorization);
-            console.log(body.user);
-            setJwt(body.authorization);
-            window.location.href = "books/";
-=======
         .then(([body, headers]) => {
             setJwt(headers.get("authorization"));
             window.location.href = "/books";
->>>>>>> main
         })
         .catch((message) => {
             alert(message);
