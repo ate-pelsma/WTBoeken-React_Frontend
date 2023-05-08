@@ -35,7 +35,6 @@ export default function Login(){
             console.log(body.user);
             setJwt(body.authorization);
             window.location.href = "books/";
-
         })
         .catch((message) => {
             alert(message);

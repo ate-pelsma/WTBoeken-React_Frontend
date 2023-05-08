@@ -3,7 +3,7 @@ import { Book } from "./Book";
 import { SearchIsbn } from "./SearchIsbn";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
 
 export const BookView = () => {
@@ -11,6 +11,7 @@ export const BookView = () => {
     const [bookData, setBookData] = useState([])
     const [createBook, setCreateBook] = useState(false)
     const [searchInput, setSearchInput] = useState("")
+    const navigate = useNavigate();
 
     const tableArray = ["afbeelding", "titel", "auteur", "isbn", "aantal", "tags"]
     const tableNames = tableArray.map(i => {
@@ -19,14 +20,14 @@ export const BookView = () => {
         )
     })
 
-    const createBookElements = () => {
+    const filterBookElements = () => {
         const currentList = bookData.filter((book) => {
             return book.title.toLowerCase().includes(searchInput.toLowerCase())
         })
         return currentList
     }
 
-    const bookElements = Array.isArray(bookData) && createBookElements().map(book => {
+    const bookElements = Array.isArray(bookData) && filterBookElements().map(book => {
         return (
             <Book key={book.id} book={book} />
         )
@@ -35,9 +36,7 @@ export const BookView = () => {
     // let visibility = visible ? 'block' : 'none'
     
     const handleClick = () => {
-        setCreateBook(prevState => {
-            return !prevState
-        })
+        navigate("/books/create")
     }
 
     let fetchBooks = () => {
@@ -63,7 +62,7 @@ export const BookView = () => {
                     </div>
                     </div>
                     <div className="col-4 d-flex flex-row-reverse">
-                        <button><NavLink to="/books/create">Add New Book</NavLink></button> 
+                        <button onClick={handleClick}>Add New Book</button> 
                     </div>
                 
             </div>
