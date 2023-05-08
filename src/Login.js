@@ -10,7 +10,6 @@ export default function Login(){
     console.log(username)
 
     function SendLogin() {
-    if(!jwt){
         var newLoginAttempt = {};
         newLoginAttempt.username = username;
         newLoginAttempt.password = password;
@@ -26,20 +25,20 @@ export default function Login(){
         })
         .then((response) => {
             if(response.status === 200){
-                console.log(response);
                 return response.json();
             }
             else
                 return Promise.reject("Invalid login attempt");
         })
-        .then(([body, headers]) => {
-            setJwt(headers.get("authorization"));
-            window.location.href = "/books";
+        .then((body) => {
+            console.log(body.authorization);
+            console.log(body.user);
+            setJwt(body.authorization);
+            window.location.href = "books/";
         })
         .catch((message) => {
             alert(message);
         })
-    }
 
     }
 
