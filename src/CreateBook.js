@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-
+import { useLocalState } from "./utils/setLocalStorage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
 
 export const CreateBook = ({data, isbn, alert}) => {
+    const [jwt, setJwt] = useLocalState("", "jwt");
 
     const emptyBook = {
         title: "",
@@ -95,6 +96,7 @@ export const CreateBook = ({data, isbn, alert}) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`
                 },
                 body: JSON.stringify(newBook)
             }

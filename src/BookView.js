@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Book } from "./Book";
 import { SearchIsbn } from "./SearchIsbn";
+import { useLocalState } from './utils/setLocalStorage'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
 
 export const BookView = () => {
+    const [jwt, setJwt] = useLocalState("", "jwt");
 
     const [bookData, setBookData] = useState([])
     const [createBook, setCreateBook] = useState(false)
@@ -40,7 +42,14 @@ export const BookView = () => {
     }
 
     let fetchBooks = () => {
-        fetch("http://localhost:8080/book/all")
+        fetch("http://localhost:8080/book/all",
+        {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET",
+        })
         .then(res => res.json())
         .then(data => {
             setBookData(data)
