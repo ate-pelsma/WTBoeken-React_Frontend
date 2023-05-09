@@ -1,9 +1,10 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { Link, Navigate } from "react-router-dom";
 
 export const User = ({user}) => {
 
-    const {id, name, email, permissions} = user
+    const {id, name, username, permissions} = user
     const handleClick = () => {
         <Navigate to={`/user/details/${id}`}/>
     }
@@ -14,9 +15,15 @@ export const User = ({user}) => {
         <tr onClick={handleClick}>
             <td>{id}</td>
             <td>{name}</td>
-            <td>{email}</td>
+            <td>{username}</td>
             <td>{role}</td>
-            <td>BEWERKEN PLACEHOLDER</td>
+            <td>
+                <Link to={`/users/edit/${id}`}>
+                    <Button variant="link" className="p-0">
+                        <i className="bi bi-gear-fill"></i>
+                    </Button>
+                </Link>
+            </td>
             <td>DEACTIVEREN PLACEHOLDER</td>
         </tr>
     )
