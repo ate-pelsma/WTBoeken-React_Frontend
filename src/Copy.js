@@ -1,10 +1,9 @@
 export const Copy = ({data}) => {
 
-    const {id, loaned, loans, inactive} = data
-    console.log(loans)
+    const {copyNumber, loaned, loans, inactive} = data
     return (
         <tr>
-            <td>{id}</td>
+            <td>{copyNumber}</td>
             <td>{loaned ? "uitgeleend" : "beschikbaar"}</td>
             <td>{}</td>
             <td>{inactive ? "ja" : "nee"}</td>
