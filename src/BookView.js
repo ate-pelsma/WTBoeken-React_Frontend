@@ -8,7 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
 
 export const BookView = () => {
-    const [jwt, setJwt] = useLocalState("", "jwt");
+    // const [jwt, setJwt] = useLocalState("", "jwt");
 
     const [bookData, setBookData] = useState([])
     const [createBook, setCreateBook] = useState(false)
@@ -42,14 +42,16 @@ export const BookView = () => {
     }
 
     let fetchBooks = () => {
-        fetch("http://localhost:8080/book/all",
-        {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${jwt}`,
-            },
-            method: "GET",
-        })
+        fetch("http://localhost:8080/book/all"
+        // ,
+        // {
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${jwt}`,
+        //     },
+        //     method: "GET",
+        // }
+        )
         .then(res => res.json())
         .then(data => {
             setBookData(data)
