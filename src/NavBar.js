@@ -42,7 +42,7 @@ switch (true) {
               <Link to="/books">Boekenoverzicht</Link>
             </li>
             <li>
-              <Link to="/register">Gebruikers overzicht</Link>
+              <Link to="/users">Gebruikers overzicht</Link>
             </li>
             <li>
               <Link to="/ReservationsSummary">Reserveringen overzicht</Link>

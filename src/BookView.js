@@ -8,7 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
 
 export const BookView = () => {
-    // const [jwt, setJwt] = useLocalState("", "jwt");
+    const [jwt, setJwt] = useLocalState("", "jwt");
 
     const [bookData, setBookData] = useState([])
     const [createBook, setCreateBook] = useState(false)
@@ -18,18 +18,21 @@ export const BookView = () => {
     const tableArray = ["afbeelding", "titel", "auteur", "isbn", "aantal", "tags"]
     const tableNames = tableArray.map(i => {
         return (
-            <th scope="col">{i}</th>
+            <th key={i} scope="col">{i}</th>
         )
     })
 
     const filterBookElements = () => {
         const currentList = bookData.filter((book) => {
-            return book.title.toLowerCase().includes(searchInput.toLowerCase())
+            return (
+                book.title.toLowerCase().includes(searchInput.toLowerCase()) || book.author.toLowerCase().includes(searchInput.toLowerCase())
+                || book.isbn.includes(searchInput)
+            )
         })
         return currentList
     }
 
-    const bookElements = Array.isArray(bookData) && filterBookElements().map(book => {
+    const bookElements = filterBookElements().map(book => {
         return (
             <Book key={book.id} book={book} />
         )
@@ -43,14 +46,14 @@ export const BookView = () => {
 
     let fetchBooks = () => {
         fetch("http://localhost:8080/book/all"
-        // ,
-        // {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${jwt}`,
-        //     },
-        //     method: "GET",
-        // }
+        ,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET",
+        }
         )
         .then(res => res.json())
         .then(data => {
@@ -64,18 +67,16 @@ export const BookView = () => {
 
     return (
         <div className="container">
-            <h2>Welcome to the book catalogus page</h2>
-            
-                <div className="row">
-                    <div className="col-8 justify-content-center">
-                    <div className="ms-4">
+            <h2 className="text-center mt-3">Admin boek overzicht</h2>
+            <div className="row">
+                <div className="col-8 justify-content-center">
+                    <div className="ms-4 mt-3">
                         <input type="text" onChange={(e) => setSearchInput(e.target.value)} placeholder="search for title here"></input>
                     </div>
-                    </div>
-                    <div className="col-4 d-flex flex-row-reverse">
-                        <button onClick={handleClick}>Add New Book</button> 
-                    </div>
-                
+                </div>
+                <div className="col-4 d-flex flex-row-reverse">
+                    <button className="buttonBlack" onClick={handleClick}>Nieuw Boek</button> 
+                </div>
             </div>
             <div className="p-4">
                 <table className="table">

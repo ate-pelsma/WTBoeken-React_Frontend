@@ -6,7 +6,7 @@ import NavBar from './NavBar';
 import { BookView } from './BookView';
 import { UserView } from './UserView';
 import { SearchIsbn } from './SearchIsbn';
-import { BookDetails } from './BookDetails';
+import { BookInfo } from './BookInfo';
 import  PrivateRoute from './PrivateRoute';
 import { Dashboard } from './Dashboard';
 import { BookDetailsDashboard } from './BookDetailsDashboard';
@@ -46,7 +46,7 @@ function App() {
                  } />
               <Route path='/books/details/:id' element={
                 <PrivateRoute>
-                <BookDetails />
+                <BookInfo />
                 </PrivateRoute>
                  } />
               <Route path="/users" element={
