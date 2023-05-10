@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import './style/modal.css';
 
-export const WarningModal = ({toggleModal, toggleArchived}) => {
+export const WarningModal = ({toggleModal, setAction}) => {
 
     const handleClick = () => {
-        toggleArchived()
+        setAction()
         toggleModal(false)
     }
 
