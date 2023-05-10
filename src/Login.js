@@ -34,7 +34,7 @@ export default function Login(){
             console.log(body.authorization);
             console.log(body.user);
             setJwt(body.authorization);
-            window.location.href = "books/";
+            window.location.href = "/";
         })
         .catch((message) => {
             alert(message);
@@ -65,7 +65,7 @@ export default function Login(){
                     className="inputfield"/>
 
                     <span>Forgot your password?</span>
-                    <button type="button" onClick={SendLogin}>Login</button>
+                    <button type="button" onClick={SendLogin} className="buttonGreen">Login</button>
                 </div>
             </div>
         </div>
