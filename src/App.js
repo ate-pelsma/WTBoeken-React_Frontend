@@ -9,6 +9,7 @@ import { SearchIsbn } from './SearchIsbn';
 import { BookInfo } from './BookInfo';
 import  PrivateRoute from './PrivateRoute';
 import { Dashboard } from './Dashboard';
+import { UserCreate } from './UserCreate';
 
 function App() {
 
@@ -46,6 +47,11 @@ function App() {
               <Route path="/users" element={
                 <PrivateRoute>
                 <UserView />
+                </PrivateRoute>
+                 } />
+              <Route path="/users/create" element={
+                <PrivateRoute>
+                <UserCreate />
                 </PrivateRoute>
                  } />
           </Routes>

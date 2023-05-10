@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react"
 import { User } from "./User"
+import { Link } from "react-router-dom"
 
 export const UserView = () => {
 
     const [userData, setUserData] = useState([])
     const [searchInput, setSearchInput] = useState("")
 
-    const userTableData = userData.map(user => {
+    const filterUsers = () => {
+        const filteredUsers = userData.filter((user) => {
+            return user.name.toLowerCase().includes(searchInput.toLowerCase())
+        }) 
+        return filteredUsers
+    } 
+
+    const userTableData = filterUsers().map(user => {
         return <User key={user.id} user={user}/>
     })
 
@@ -31,18 +39,20 @@ export const UserView = () => {
                         <input type="text" className="mb-5" onChange={(e) => setSearchInput(e.target.value)} placeholder="Gebruiker zoeken"></input>
                     </div>
                     <div className="col-auto">
-                        <button className="btn btn-primary">Gebruiker toevoegen</button>
+                        <Link to="/users/create">
+                            <button className="btn buttonGreen">Gebruiker toevoegen</button>
+                        </Link>
                     </div>
+                    
                 </div>
-                <table className="table align-middle text-center">
+                <table className="table table-striped align-middle text-center">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Naam</th>
                             <th>email</th>
                             <th>Functie</th>
-                            <th style={{ width: '80px' }}></th>
-                            <th style={{ width: '80px' }}>Deactiveren</th>
+                            <th style={{ width: "40px" }}></th>
+                            <th style={{ width: "80px" }}>Deactiveren</th>
                         </tr>
                     </thead>
                     <tbody>
