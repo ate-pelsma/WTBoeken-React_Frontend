@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import './style/modal.css';
 
-export const WarningModal = ({toggleModal, toggleArchived}) => {
+export const WarningModal = ({toggleModal, setAction, modalText}) => {
 
     const handleClick = () => {
-        toggleArchived()
+        setAction()
         toggleModal(false)
     }
 
@@ -12,11 +12,11 @@ export const WarningModal = ({toggleModal, toggleArchived}) => {
         <div className="modal--background">
             <div className="modal--container">
                 <div className="modal--title">
-                    <h1>Bevestig deze actie</h1>
+                    <h1>{modalText}</h1>
                 </div>
                 <div className="modal--footer">
-                    <button onClick={() => toggleModal(false)}>Annuleren</button>
-                    <button onClick={handleClick}>Bevestigen</button>
+                    <button className='buttonGrey' onClick={() => toggleModal(false)}>Annuleren</button>
+                    <button className='buttonGrey' onClick={handleClick}>Bevestigen</button>
                 </div>
             </div>
         </div>

@@ -89,6 +89,10 @@ button:active{
   opacity: .5;
 }
 
+svg:hover{
+  cursor: pointer;
+}
+
 body{
   font-family: Arial, Helvetica, sans-serif; 
   margin: 0px;
