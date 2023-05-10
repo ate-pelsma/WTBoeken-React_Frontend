@@ -48,7 +48,11 @@ function App() {
                 <UserView />
                 </PrivateRoute>
                  } />
-              {/* <Route path="/reservations" element={<Reservations />} /> */}
+              <Route path="/reservations" element={
+                <PrivateRoute>
+                <Reservation />
+                </PrivateRoute>
+                 } />
           </Routes>
         </Router>
     </div>

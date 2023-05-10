@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { Copy } from "./Copy"
+import { BookInfo } from "./BookInfo"
 
 export const BookDetails = () => {
 
     const { id } = useParams()
     const [copyDetails, setCopyDetails] = useState([])
+    const [book, setBook] = useState("")
+    const fetchUrl = "http://localhost:8080/"
 
     const copyElements = copyDetails.map(copy => <Copy key={copy.id} data={copy} />)
 
+    const archiveString = book.archived ? "" : "niet " 
+
     const fetchCopies = () => {
-        fetch("http://localhost:8080/book/" + id + "/copy/all")
+        fetch(fetchUrl + "book/" + id + "/copy/all")
         .then(r => r.json())
         .then(d => setCopyDetails(d))
     }
 
     const fetchBook = () => {
-        fetch("http://localhost:8080/book/" + id)
+        fetch(fetchUrl + "book/" + id)
         .then(r => r.json())
-        .then(d => console.log(d))
+        .then(d => setBook(d))
     }
 
     useEffect(() => {
@@ -27,9 +32,9 @@ export const BookDetails = () => {
     }, [])
 
     return (
-        <div>
-            <div>Book details for book id {id}</div>
-            <table className="table">
+        <div className="container">
+            <BookInfo bookid={id} />
+            <table className="table mt-3">
                 <caption>Exemplaren</caption>
                 <thead scope="row">
                     <tr>
@@ -44,7 +49,7 @@ export const BookDetails = () => {
                     {copyElements}
                 </tbody>
             </table>
-            <table className="table">
+            {/* <table className="table">
                 <caption>Reserveringen</caption>
                 <thead scope="row">
                     <tr>
@@ -69,7 +74,7 @@ export const BookDetails = () => {
                 <tbody>
                     
                 </tbody>
-            </table>
+            </table> */}
         </div>
     )
 }

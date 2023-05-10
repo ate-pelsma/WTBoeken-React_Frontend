@@ -1,10 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 export const Book = ({book}) => {
 
     const {id, author, image, isbn, tags, title, copies} = book
+    const navigate = useNavigate();
+    
     const handleClick = () => {
-        window.location.href = `/books/details/${id}`
+        navigate(`/books/details/${id}`)
     }
 
     return (
