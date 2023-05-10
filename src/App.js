@@ -6,9 +6,9 @@ import NavBar from './NavBar';
 import { BookView } from './BookView';
 import { UserView } from './UserView';
 import { SearchIsbn } from './SearchIsbn';
-import { BookDetails } from './BookDetails';
+import { BookInfo } from './BookInfo';
 import  PrivateRoute from './PrivateRoute';
-import { Reservation } from './Reservation';
+import { Dashboard } from './Dashboard';
 
 function App() {
 
@@ -17,9 +17,12 @@ function App() {
         <Router>
           <NavBar />
           <Routes>
-              <Route path="/" element={<Reservation />} />
               <Route path="/login" element={<Login />} />
-              
+              <Route path="/" element={
+                <PrivateRoute>
+                <Dashboard />
+                </PrivateRoute>
+                 } />
               <Route path="/register" element={
                 <PrivateRoute>
                 <Register />
@@ -37,7 +40,7 @@ function App() {
                  } />
               <Route path='/books/details/:id' element={
                 <PrivateRoute>
-                <BookDetails />
+                <BookInfo />
                 </PrivateRoute>
                  } />
               <Route path="/users" element={
@@ -45,12 +48,6 @@ function App() {
                 <UserView />
                 </PrivateRoute>
                  } />
-              <Route path="/reservations" element={
-                <PrivateRoute>
-                <Reservation />
-                </PrivateRoute>
-                 } />
-              {/* <Route path="/reservations" element={<Reservations />} /> */}
           </Routes>
         </Router>
     </div>

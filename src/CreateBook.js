@@ -135,7 +135,7 @@ export const CreateBook = ({data, isbn, alert}) => {
                 </div>
                 <div>
                     <label htmlFor="book-stock">Aantal</label>
-                    <input value={newBook.stock} onChange={(e) => setStock(e.target.value)} id="book-stock" type="number" min="0" className="form-control" placeholder="Aantal exemplaren"></input>
+                    <input value={newBook.stock} onChange={(e) => setStock(e.target.value)} id="book-stock" type="number" min="1" className="form-control" placeholder="Aantal exemplaren"></input>
                 </div>
                 <Button type="submit" className="mt-2" variant="success">Save Book</Button>
             </form>

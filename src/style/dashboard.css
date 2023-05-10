@@ -1,0 +1,35 @@
+.dashboard-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.book-image-dashboard{
+    width: 11rem;
+    height: 11rem;
+    margin: 0.5rem;
+}
+
+.book-dashboard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 25%;
+    min-width: 20%;
+    padding: 2rem;
+}
+
+.book-details-container{
+    flex: 1;
+    min-height: 4.52rem;
+}
+
+.book-details-container{
+    display:flex;
+    overflow: auto;
+    width: 11rem;
+    align-items: center;
+    justify-content: center;
+}
