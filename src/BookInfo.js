@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom"
 import { WarningModal } from "./WarningModal"
 import { BookCopies } from "./BookCopies"
 
+import { ToggleOff, ToggleOn  } from 'react-bootstrap-icons';
+
 export const BookInfo = () => {
 
     const fetchUrl = "http://localhost:8080/"
@@ -39,7 +41,6 @@ export const BookInfo = () => {
         })
         .then(r => r.json())
         .then(d => {
-            console.log(d)
             setBook(d)
         })
     }
@@ -69,7 +70,8 @@ export const BookInfo = () => {
                                 <p>{book.isbn}</p>
                                 <p>{book.author}</p>
                                 <p>Gearchiveerd:
-                                    <input type="checkbox" checked={book.archived ? true : false} readOnly={true}></input></p>
+                                    {book.archived ? <ToggleOn size={25} className="ms-1"/> : <ToggleOff size={25} className="ms-1"/>}
+                                </p>
                                 <p>{book.tags}</p>
                             </div>
                         </div>
