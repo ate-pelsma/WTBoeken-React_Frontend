@@ -8,7 +8,7 @@ import { UserView } from './UserView';
 import { SearchIsbn } from './SearchIsbn';
 import { BookDetails } from './BookDetails';
 import  PrivateRoute from './PrivateRoute';
-import { Reservation } from './Reservation';
+import { Dashboard } from './Dashboard';
 
 function App() {
 
@@ -17,9 +17,12 @@ function App() {
         <Router>
           <NavBar />
           <Routes>
-              <Route path="/" element={<Reservation />} />
               <Route path="/login" element={<Login />} />
-              
+              <Route path="/" element={
+                <PrivateRoute>
+                <Dashboard />
+                </PrivateRoute>
+                 } />
               <Route path="/register" element={
                 <PrivateRoute>
                 <Register />
@@ -50,7 +53,6 @@ function App() {
                 <Reservation />
                 </PrivateRoute>
                  } />
-              {/* <Route path="/reservations" element={<Reservations />} /> */}
           </Routes>
         </Router>
     </div>
