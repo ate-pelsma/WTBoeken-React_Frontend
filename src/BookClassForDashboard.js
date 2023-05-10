@@ -4,20 +4,21 @@ export const BookClassForDashboard = ({book, handleCreateReservation}) => {
 
     const {id, image, title} = book
     const handleClick = () => {
-        window.location.href = `/books/details/${id}` 
+        window.location.href = `/dashboard/books/details/${id}` 
     }
 
     return (
-        <div className="book-dashboard">
-            <div classNAme="book-image-container">
-                <img src={image} alt="None" onClick={handleClick} className="book-image-dashboard"></img>
+        <div className="dashboard-book-container">
+            <div>
+                <img src={image} alt="None" onClick={handleClick} className="dashboard-image"></img>
             </div>
-            <div className="book-details-container">
+            <div className="dashboard-title">
                 {title}
             </div>
-            <div className="book-button-container">
+            <div>
                 <button onClick={() => handleCreateReservation(id)} className="buttonGrey"><p>Reserveer!</p></button>
             </div>
         </div>
+
     )
 }

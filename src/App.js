@@ -9,6 +9,7 @@ import { SearchIsbn } from './SearchIsbn';
 import { BookInfo } from './BookInfo';
 import  PrivateRoute from './PrivateRoute';
 import { Dashboard } from './Dashboard';
+import { BookDetailsDashboard } from './BookDetailsDashboard';
 
 function App() {
 
@@ -23,6 +24,11 @@ function App() {
                 <Dashboard />
                 </PrivateRoute>
                  } />
+              <Route path="/dashboard/books/details/:id" element={
+                <PrivateRoute>
+                <BookDetailsDashboard />
+                </PrivateRoute>
+                 } />   
               <Route path="/register" element={
                 <PrivateRoute>
                 <Register />
