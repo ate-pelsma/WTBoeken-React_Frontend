@@ -28,7 +28,7 @@ export const BookCopies = ({id}) => {
         fetchCopies()
     }, [])
 
-    const copyElements = copyDetails.map(copy => <Copy key={copy.id} data={copy} />)
+    const copyElements = copyDetails.map(copy => <Copy key={copy.id} data={copy} bookid={id} />)
 
     return (
         <div>
