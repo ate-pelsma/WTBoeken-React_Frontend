@@ -12,7 +12,7 @@ export default function NavBar()
             <li><Link to="/MyReservations" >Mijn Reserveringen</Link></li>
             <li><Link to="/MyAccount" >Mijn Account</Link></li> */}
             <li><Link to="/books" >Boekenoverzicht</Link></li>
-            <li><Link to="/register" >Gebruikers overzicht</Link></li>
+            <li><Link to="/users" >Gebruikers overzicht</Link></li>
             {/* <li><Link to="/ReservationsSummary">Reserveringen overzicht</Link></li> */}
           </ul>
       </nav>
