@@ -26,16 +26,12 @@ html, body{
 .buttonGrey{
   background: #c8c8c8;
   box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 4px;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
   color: #000000;
   border-radius: 2rem;
   width: auto;
   height: auto;
   border: none;
   text-align: center;
-  line-height: 18px;
   margin: 0.5rem;
 }
 
@@ -102,54 +98,26 @@ body{
   display: inline-block;
   width: 15rem;
   padding: 10px;
-}
-
-.AccountLogo{
-  display: inline-block;
-  width: 3rem;
-  padding: 8px;
-  margin-top: 8px;
-  margin-right: 5px;
+  margin-left: -200px;
 }
 
 .navbar{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 3%;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   background: white;
   height: 15vh;
 }
 
-.nav-links{
-  display:flex;
-  overflow: hidden;
+.navLinks{
+  border-radius: 10px;
+  margin: 15px;
 }
 
-.nav-links a {
-  float: left;
-  text-align: center;
-  padding: 0.75rem;
-  text-decoration: none;
-  color: black;
-}
-
-.nav-links > li {
-  display: inline-block;
-  list-style: none;
-  font-size: 20px;
-  padding: 1rem;
-}
-
-.nav-links a:hover{
+.navLinks:hover{
   background: #00e600;
-  border-radius: 10px;
 }
 
-.nav-links a:active{
+.navLinks:active{
   background: #00a100;
-  border-radius: 10px;
 }
 
 .App{
@@ -171,4 +139,42 @@ footer{
   font-size: 20px;
 }
 
+.me-auto{
+  font-size: 1.20rem;
+}
 
+@media only screen and (max-width: 1750px) {
+  .logo{
+    margin-left: -150px;
+  }
+}
+
+@media only screen and (max-width: 1600px) {
+  .logo{
+    margin-left: -100px;
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  .logo{
+    margin-left: -50px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .navLinks{
+    margin: 5px;
+  }
+}
+
+@media only screen and (max-width: 990px) {
+  .logo{
+    margin-left: 0px;
+  }
+
+  .navbar-collapse.show {
+    background-color: #ffffff;
+    padding-right: 1rem;
+    border: 1px solid black;
+  }
+}
