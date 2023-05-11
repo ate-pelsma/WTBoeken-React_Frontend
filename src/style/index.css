@@ -26,16 +26,12 @@ html, body{
 .buttonGrey{
   background: #c8c8c8;
   box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 4px;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
   color: #000000;
   border-radius: 2rem;
   width: auto;
   height: auto;
   border: none;
   text-align: center;
-  line-height: 18px;
   margin: 0.5rem;
 }
 

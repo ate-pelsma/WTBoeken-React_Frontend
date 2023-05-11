@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import { User } from "./User"
+import { useLocalState } from "./utils/setLocalStorage";
 
 export const UserView = () => {
+    const [jwt, setJwt] = useLocalState("", "jwt");
 
     const [userData, setUserData] = useState([])
     const [searchInput, setSearchInput] = useState("")
@@ -11,7 +13,13 @@ export const UserView = () => {
     })
 
     let fetchUsers = () => {
-        fetch("http://localhost:8080/user/all")
+        fetch("http://localhost:8080/user/all", {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET",
+        })
         .then(res => res.json())
         .then(data => { setUserData(data) } )
     }
