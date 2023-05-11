@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 export const BookClassForDashboard = ({book, handleCreateReservation}) => {
+    const navigate = useNavigate();
 
     const {id, image, title} = book
     const handleClick = () => {
-        window.location.href = `/dashboard/books/details/${id}` 
+        navigate(`/dashboard/books/details/${id}`)
     }
 
     return (

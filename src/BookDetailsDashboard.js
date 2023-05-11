@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useLocalState } from "./utils/setLocalStorage";
-import { Book } from "./Book";
 
 
 export const BookDetailsDashboard = () => { 
@@ -10,6 +9,8 @@ export const BookDetailsDashboard = () => {
     const [jwt, setJwt] = useLocalState("", "jwt");
     const [copyDetails, setCopyDetails] = useState([])
     const [copysAvailable, setCopysAvailable] = useState(0)
+    const [copysAvailablePercentage, setCopysAvailablePercentage] = useState(0)
+    const navigate = useNavigate();
     
     function createReservation(bookId){
         fetch("http://localhost:8080/reservations/save", {
@@ -74,7 +75,13 @@ export const BookDetailsDashboard = () => {
             }
         }
         setCopysAvailable(count);
+        setCopysAvailablePercentage(count / copyDetails.length * 100)
+        console.log(copysAvailablePercentage);
     }, [copyDetails]);
+
+    const handleGoBack = () => {
+        navigate(-1);
+    }
 
     return(
         <div className="book-container">
@@ -89,10 +96,24 @@ export const BookDetailsDashboard = () => {
                     <h2>ISBN:</h2>
                     <span>{bookDetails.isbn}</span>
                     <h2>Beschikbaar:</h2>
+                    <div className="meter">
+                        <span style={{width: `${copysAvailablePercentage}%`,
+                    backgroundColor: 
+                    copysAvailablePercentage > 10 ? 'rgb(43,194,83)' : copysAvailablePercentage > 0 ? 'orange' : 'red'}}></span>
+                    </div>
                     <span>{copysAvailable}/{copyDetails.length}</span>
                     <button onClick={() => createReservation(id)} className="buttonGreen"><h2>Reserveer!</h2></button>
                 </div>
+                <div>
+                <img
+                    src={require("./images/Go-back-icon.png")}
+                    alt="Workingtalent Logo"
+                    className="back-arrow"
+                    onClick={handleGoBack}
+                />
+                </div>
             </div>
+
         </div>
     )
 }
