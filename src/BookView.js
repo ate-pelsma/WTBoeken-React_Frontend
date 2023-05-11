@@ -67,21 +67,21 @@ export const BookView = () => {
     }, [])
 
     return (
-        <div className="container">
+        <div className="container" style={{width: "100%"}}>
             <h2 className="text-center mt-3">Admin boek overzicht</h2>
             <div className="row">
-                <div className="col-6 justify-content-center">
+                <div className="col-12 justify-content-center justify-content-md-start col-md-6">
                     <div className="ms-4 mt-3 input-group">
                         <input className="form-control rounded-pill" type="text" onChange={(e) => setSearchInput(e.target.value)} placeholder="zoek naar een boek"></input>
                         <span style={{marginLeft: "-40px", zIndex: 1}} className="input-group-append mt-2"><Search /></span>
                     </div>
                 </div>
-                <div className="col-6 d-flex flex-row-reverse">
-                    <div className="p-1"><button className="buttonBlack me-0" onClick={handleClick}>Nieuw Boek</button></div>
+                <div className="col-12 justify-content-center d-flex justify-content-md-end col-md-6">
+                    <div className="p-1"><button className="buttonBlack" onClick={handleClick}>Nieuw Boek</button></div>
                 </div>
             </div>
-            <div className="p-4 d-flex">
-                <table className="table col-10">
+            <div className="row">
+                <table className="table col-12">
                     <thead>
                         <tr>
                             {tableNames}

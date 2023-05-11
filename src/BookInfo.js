@@ -59,29 +59,27 @@ export const BookInfo = () => {
         <div className="container d-grid mt-3">
             {showModal && modalElement}
             <div className="row">
-                <div className="col-6">
-                    <div className="container">
-                        <div className="row mt-3">
-                            <div className="col-3 d-flex justify-content-center">
-                                <img src={book.image} alt="no image" style={{width: "120px"}}></img>
-                            </div>
-                            <div className="col-9">
-                                <p>{book.title}</p>
-                                <p>{book.isbn}</p>
-                                <p>{book.author}</p>
-                                <p>Gearchiveerd:
-                                    {book.archived ? <ToggleOn onClick={handleArchiveClick} size={25} className="ms-1"/> : <ToggleOff onClick={handleArchiveClick} size={25} className="ms-1"/>}
-                                </p>
-                                <p>{book.tags}</p>
-                            </div>
+                <div className="col-12 col-md-7">
+                    <div className="row">
+                        <div className="col-6 col-lg-3 mr-2 d-flex justify-content-center align-self-center">
+                            <img src={book.image} alt="no image" style={{width: "120px"}}></img>
+                        </div>
+                        <div className="col-6 mt-4 d-flex justify-content-center flex-column">
+                            <p className="text-center text-md-left">{book.title}</p>
+                            <p className="text-center text-md-left">{book.isbn}</p>
+                            <p className="text-center text-md-left">{book.author}</p>
+                            <p className="text-center text-md-left">Gearchiveerd:
+                                {book.archived ? <ToggleOn onClick={handleArchiveClick} size={25} className="ms-1"/> : <ToggleOff onClick={handleArchiveClick} size={25} className="ms-1"/>}
+                            </p>
+                            <p className="text-center text-md-left">{book.tags}</p>
                         </div>
                     </div>
                 </div>
-                <div className="col-6">
-                    <div className="container d-grid">
-                        <div className="row mt-5">
-                            <div className="col-4 ms-auto"><button style={{width: "150px", height: "50px"}} className="buttonGrey" onClick={handleArchiveClick}>{book.archived ? "Dearchiveren" : "Archiveren"}</button></div>
-                            <div className="col-4"><button style={{width: "150px", height: "50px"}} className="buttonGrey" onClick={addCopyClick}>Exemplaar toevoegen</button></div>
+                <div className="col-12 col-md-5">
+                    <div className="container">
+                        <div className="row mt-3 mt-md-5">
+                            <div className="col-6 d-flex justify-content-center"><button style={{width: "150px", height: "50px", padding: 0}} className="buttonGrey" onClick={handleArchiveClick}>{book.archived ? "Dearchiveren" : "Archiveren"}</button></div>
+                            <div className="col-6 d-flex justify-content-center"><button style={{width: "150px", height: "50px", padding: 0}} className="buttonGrey" onClick={addCopyClick}>Exemplaar toevoegen</button></div>
                         </div>
                     </div>
                 </div>

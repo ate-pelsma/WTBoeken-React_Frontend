@@ -37,12 +37,12 @@ export const BookCopies = ({id}) => {
             <table className="table table-striped table-hover mt-3">
                 <caption>Exemplaren</caption>
                 <thead>
-                    <tr className="d-flex">
-                        <th scope="col" className="col-1">id</th>
-                        <th scope="col" className="col-1 text-center">status</th>
-                        <th scope="col" className="col-5 text-center">uitgeleend aan</th>
-                        <th scope="col" className="col-1 text-center">inactief</th>
-                        <th scope="col" className="col-4 text-center">acties</th>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">beschikbaar</th>
+                        <th scope="col">uitgeleend aan</th>
+                        <th scope="col">inactief</th>
+                        <th scope="col" className="text-center">acties</th>
                     </tr>
                 </thead>
                 <tbody>
