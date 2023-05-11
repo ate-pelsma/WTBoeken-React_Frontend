@@ -28,19 +28,19 @@ export const BookCopies = ({id}) => {
         fetchCopies()
     }, [])
 
-    const copyElements = copyDetails.map(copy => <Copy key={copy.id} data={copy} />)
+    const copyElements = copyDetails.map(copy => <Copy key={copy.id} data={copy} bookid={id} />)
 
     return (
         <div>
-            <table className="table mt-3">
+            <table className="table table-striped table-hover mt-3">
                 <caption>Exemplaren</caption>
-                <thead scope="row">
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">status</th>
-                        <th scope="col">uitgeleend aan</th>
-                        <th scope="col">inactief</th>
-                        <th scope="col">acties</th>
+                <thead>
+                    <tr className="d-flex">
+                        <th scope="col" className="col-1">id</th>
+                        <th scope="col" className="col-1 text-center">status</th>
+                        <th scope="col" className="col-5 text-center">uitgeleend aan</th>
+                        <th scope="col" className="col-1 text-center">inactief</th>
+                        <th scope="col" className="col-4 text-center">acties</th>
                     </tr>
                 </thead>
                 <tbody>

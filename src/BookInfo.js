@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom"
 import { WarningModal } from "./WarningModal"
 import { BookCopies } from "./BookCopies"
 
+import { ToggleOff, ToggleOn  } from 'react-bootstrap-icons';
+
 export const BookInfo = () => {
 
     const fetchUrl = "http://localhost:8080/"
@@ -12,12 +14,12 @@ export const BookInfo = () => {
     const [modalElement, setModalElement] = useState("")
 
     const handleArchiveClick = () => {
-        setModalElement(<WarningModal toggleModal={setShowModal} setAction={setArchived} />)
+        setModalElement(<WarningModal toggleModal={setShowModal} setAction={setArchived} modalText={"Weet je het zeker?"} />)
         setShowModal(true)
     }
 
     const addCopyClick = () => {
-        setModalElement(<WarningModal toggleModal={setShowModal} setAction={addCopy} />)
+        setModalElement(<WarningModal toggleModal={setShowModal} setAction={addCopy} modalText={"Exemplaar toevoegen?"} />)
         setShowModal(true)
     }
 
@@ -39,7 +41,6 @@ export const BookInfo = () => {
         })
         .then(r => r.json())
         .then(d => {
-            console.log(d)
             setBook(d)
         })
     }
@@ -55,29 +56,34 @@ export const BookInfo = () => {
     }, [])
 
     return (
-        <div className="container">
+        <div className="container d-grid mt-3">
             {showModal && modalElement}
-            <div className="d-flex mt-5">
-                <div className="d-inline-block">
-                    <img src={book.image} alt="no image" style={{width: "100px"}}></img>
-                </div>
-                <div className="d-inline-block p-2">
-                    <p>{book.title}</p>
-                    <p>{book.isbn}</p>
-                    <p>{book.author}</p>
-                    <p>{book.tags}</p>
-                </div>
-                <div className="d-inline-block p-2">
-                    <div className="d-flex justify-content-center">
-                        <div className="d-inline-block">
-                            <div>Gearchiveerd</div>
-                        </div>
-                        <div className="d-inline-block">
-                            <input style={{margin: "5px"}} type="checkbox" checked={book.archived ? true : false} readOnly={true}></input>
+            <div className="row">
+                <div className="col-6">
+                    <div className="container">
+                        <div className="row mt-3">
+                            <div className="col-3">
+                                <img src={book.image} alt="no image" style={{width: "120px"}}></img>
+                            </div>
+                            <div className="col-9">
+                                <p>{book.title}</p>
+                                <p>{book.isbn}</p>
+                                <p>{book.author}</p>
+                                <p>Gearchiveerd:
+                                    {book.archived ? <ToggleOn size={25} className="ms-1"/> : <ToggleOff size={25} className="ms-1"/>}
+                                </p>
+                                <p>{book.tags}</p>
+                            </div>
                         </div>
                     </div>
-                    <div><button onClick={handleArchiveClick}>{book.archived ? "Boek dearchiveren" : "Boek archiveren"}</button></div>
-                    <div><button onClick={addCopyClick}>Exemplaar toevoegen</button></div>
+                </div>
+                <div className="col-6">
+                    <div className="container d-grid">
+                        <div className="row mt-5">
+                            <div className="col-4 ms-auto"><button style={{width: "150px", height: "50px"}} className="buttonGrey" onClick={handleArchiveClick}>{book.archived ? "Dearchiveren" : "Archiveren"}</button></div>
+                            <div className="col-4"><button style={{width: "150px", height: "50px"}} className="buttonGrey" onClick={addCopyClick}>Exemplaar toevoegen</button></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <BookCopies key={book.stock} id={id} />

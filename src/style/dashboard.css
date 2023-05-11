@@ -5,13 +5,7 @@
     align-items: center;
 }
 
-.book-image-dashboard{
-    width: 11rem;
-    height: 11rem;
-    margin: 0.5rem;
-}
-
-.book-dashboard{
+.dashboard-book-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,15 +15,71 @@
     padding: 2rem;
 }
 
-.book-details-container{
-    flex: 1;
-    min-height: 4.52rem;
+.dashboard-image{
+    width: 11rem;
+    height: 11rem;
+    margin: 0.5rem;
 }
 
-.book-details-container{
+.dashboard-title{
+    min-height: 4.52rem;
     display:flex;
-    overflow: auto;
     width: 11rem;
     align-items: center;
     justify-content: center;
+}
+
+.book-container{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    margin-top: 4rem;
+    min-width: 50vh;
+    margin-left: 18rem;
+    height: 75vh;
+}
+
+.book-details-container{
+    display: flex;
+    flex-direction: row;
+    height:70vh;
+}
+
+.book-image-container{
+    margin-top: 1rem;
+    display: flex;
+    width: 30rem;
+    height: 35rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-image{
+    width: 25rem;
+    height: 35rem;
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.5);
+}
+
+.book-info-container{
+    margin-left: 7.5rem;
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 60vh;
+    height: 50vh;
+}
+
+.book-info-container > h1{
+    margin-bottom: 1rem;
+}
+
+.book-info-container > span{
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.buttonGreen{
+    width: 4rem;
+    height: auto;
+    overflow: none;
 }
