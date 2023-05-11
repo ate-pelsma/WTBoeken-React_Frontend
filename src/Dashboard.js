@@ -50,9 +50,7 @@ export const Dashboard = () => {
                 Authorization: `Bearer ${jwt}`,
             },
             method: "POST",
-            body: JSON.stringify({
-                BookId: bookId
-            })
+            body: JSON.stringify(bookId)
         })
         .then((response) => {
             console.log(response);
@@ -64,21 +62,8 @@ export const Dashboard = () => {
     }
 
     return (
-        <div>
-            <div>
-                <button className="buttonBlack">Zwarte knop</button>
-            </div>
-            <div>
-                <button className="buttonGreen">Groeneknop</button>
-            </div>
-            <div>
-                <button className="buttonGrey">Grijzeknop</button>
-            </div>
             <div className="dashboard-container">
                 {bookElements}
             </div>
-
-        </div>
-
     )
 }
