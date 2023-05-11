@@ -109,7 +109,7 @@ body{
 
 .navLinks{
   border-radius: 10px;
-  margin: 20px;
+  margin: 15px;
 }
 
 .navLinks:hover{
@@ -170,5 +170,11 @@ footer{
 @media only screen and (max-width: 990px) {
   .logo{
     margin-left: 0px;
+  }
+
+  .navbar-collapse.show {
+    background-color: #ffffff;
+    padding-right: 1rem;
+    border: 1px solid black;
   }
 }
