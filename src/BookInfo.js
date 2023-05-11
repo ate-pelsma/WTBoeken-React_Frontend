@@ -62,7 +62,7 @@ export const BookInfo = () => {
                 <div className="col-6">
                     <div className="container">
                         <div className="row mt-3">
-                            <div className="col-3">
+                            <div className="col-3 d-flex justify-content-center">
                                 <img src={book.image} alt="no image" style={{width: "120px"}}></img>
                             </div>
                             <div className="col-9">
@@ -70,7 +70,7 @@ export const BookInfo = () => {
                                 <p>{book.isbn}</p>
                                 <p>{book.author}</p>
                                 <p>Gearchiveerd:
-                                    {book.archived ? <ToggleOn size={25} className="ms-1"/> : <ToggleOff size={25} className="ms-1"/>}
+                                    {book.archived ? <ToggleOn onClick={handleArchiveClick} size={25} className="ms-1"/> : <ToggleOff onClick={handleArchiveClick} size={25} className="ms-1"/>}
                                 </p>
                                 <p>{book.tags}</p>
                             </div>

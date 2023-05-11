@@ -21,14 +21,16 @@ export const BookCopies = ({id}) => {
             method: "GET",
         })
         .then(r => r.json())
-        .then(d => setCopyDetails(d))
+        .then(d => {
+            setCopyDetails(d)
+        })
     }
 
     useEffect(() => {
         fetchCopies()
     }, [])
 
-    const copyElements = copyDetails.map(copy => <Copy key={copy.id} data={copy} bookid={id} />)
+    const copyElements = copyDetails.map(copy => <Copy key={copy.id} data={copy} bookid={id} setCopyDetails={setCopyDetails} />)
 
     return (
         <div>

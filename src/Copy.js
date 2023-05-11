@@ -3,10 +3,9 @@ import { WarningModal } from "./WarningModal"
 import { useEffect, useState } from "react"
 import { setMaxListeners } from "events"
 
-export const Copy = ({data}) => {
+export const Copy = ({data, bookid, setCopyDetails}) => {
 
     const redirect = useNavigate()
-
     const {id, copyNumber, loaned, inactive} = data
     const [showModal, setShowModal] = useState(false)
     const [modalElement, setModalElement] = useState("")
@@ -17,6 +16,10 @@ export const Copy = ({data}) => {
         setShowModal(true)
     }
 
+    const handleReservationClick = () => {
+        console.log("toewijs actie")
+    }
+
     const setInactive = () => {
         fetch("http://localhost:8080/copy/inactive/" + id, {
             method: 'PUT',
@@ -25,6 +28,15 @@ export const Copy = ({data}) => {
         .then(r => r.json())
         .then(d => {
             setCopyData(d)
+            reRenderParent(d)
+        })
+    }
+
+    const reRenderParent = (d) => {
+        const currentCopy = copyNumber - 1
+        setCopyDetails(prevState => {
+            prevState[currentCopy] = d
+            return prevState
         })
     }
 
@@ -36,7 +48,7 @@ export const Copy = ({data}) => {
                 <td className="col-1 text-center">{copyData.inactive ? "ja" : "nee"}</td>
                 <td className="col-4 d-flex justify-content-center">
                     <button onClick={handleInactiveClick} className="buttonGrey m-1">{copyData.inactive ? "activeren" : "inactiveren"}</button>
-                    <button className="buttonGrey m-1">toewijzen</button>
+                    <button onClick={handleReservationClick} className="buttonGrey m-1">toewijzen</button>
                 </td>
                 <td>
                     {showModal && modalElement}
