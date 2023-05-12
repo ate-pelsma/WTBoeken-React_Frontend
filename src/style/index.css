@@ -24,6 +24,8 @@ html, body{
 }
 
 .buttonGrey{
+  display: inline-block;
+  width: auto;
   background: #c8c8c8;
   box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 4px;
   color: #000000;
@@ -41,6 +43,8 @@ html, body{
 }
 
 .buttonGreen{
+  display: inline-block;
+  width: auto;
   background: #00e600;
   box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 4px;
   padding: 1.5rem;
@@ -60,6 +64,8 @@ html, body{
 }
 
 .buttonBlack{
+  display: inline-block;
+  width: auto;
   background: #000000;
   box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 4px;
   color: #ffffff;
@@ -85,8 +91,13 @@ button:active{
   opacity: .5;
 }
 
-svg:hover{
+.user-table-details:hover{
   cursor: pointer;
+}
+
+.custom-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 body{
