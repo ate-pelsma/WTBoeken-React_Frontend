@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useLocalState } from "./utils/setLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 
 export const UserCreate = () => {
 
     const [jwt, setJwt] = useLocalState("", "jwt")
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: "",
         username: "",
@@ -38,7 +40,7 @@ export const UserCreate = () => {
             body: JSON.stringify(userData)
         })
 
-        window.location.href = "http://localhost:3000/users"
+        navigate("/users")
     };
 
     return (

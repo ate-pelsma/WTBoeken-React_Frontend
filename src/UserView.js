@@ -16,10 +16,6 @@ export const UserView = () => {
         return filteredUsers
     } 
 
-    const userTableData = filterUsers().map(user => {
-        return <User key={user.id} user={user}/>
-    })
-
     let fetchUsers = () => {
         fetch("http://localhost:8080/user/all", {
             headers: {
@@ -31,6 +27,10 @@ export const UserView = () => {
         .then(res => res.json())
         .then(data => { setUserData(data) } )
     }
+
+    const userTableData = filterUsers().map(user => {
+        return <User key={user.id} user={user} />
+    })
 
     useEffect(fetchUsers, [])
 

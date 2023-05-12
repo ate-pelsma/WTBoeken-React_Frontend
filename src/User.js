@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useLocalState } from "./utils/setLocalStorage";
 
 export const User = ({ user }) => {
 
     const [jwt, setJwt] = useLocalState("", "jwt");
-    const { id, name, username } = user
+    const [userUpdate, setUserUpdate] = useState(user)
+    const { id, name, username } = userUpdate
     const handleClick = () => {
         <Navigate to={`/user/details/${id}`} />
     }
@@ -20,16 +21,17 @@ export const User = ({ user }) => {
             },
             method: "GET",
         })
-        window.location.reload()
+        // .then(r => { r.json() })
+        // .then(d => setUserUpdate(d))
     }
 
     return (
         <tr onClick={handleClick}>
-            <td><Link to={`/users/details/${user.id}`} className="custom-link">{name}</Link></td>
-            <td><Link to={`/users/details/${user.id}`} className="custom-link">{username}</Link></td>
+            <td><Link to={`/users/details/${userUpdate.id}`} className="custom-link">{name}</Link></td>
+            <td><Link to={`/users/details/${userUpdate.id}`} className="custom-link">{username}</Link></td>
             <td>{role}</td>
             <td>
-                <Link to={`/users/edit/${user.id}`}>
+                <Link to={`/users/edit/${userUpdate.id}`}>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         width="16" 
