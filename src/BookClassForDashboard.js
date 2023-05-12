@@ -16,7 +16,7 @@ export const BookClassForDashboard = ({book, handleCreateReservation}) => {
                 <div className="dashboard-title">
                     <p>{title}</p>
                 </div>
-                <button onClick={() => handleCreateReservation(id)} className="buttonGrey"><p>Reserveer!</p></button>
+                <button onClick={() => handleCreateReservation(book)} className="buttonGrey"><p>Reserveer!</p></button>
             </div>
         </div>
 

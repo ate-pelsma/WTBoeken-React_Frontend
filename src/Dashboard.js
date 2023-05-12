@@ -1,15 +1,30 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import './style/dashboard.css';
-
+import { DashboardModal } from "./DashboardModal"
 import { useLocalState } from "./utils/setLocalStorage";
 import { BookClassForDashboard } from "./BookClassForDashboard";
+import { DashboardModalSucces } from "./DashboardModalSucces";
 
 
 export const Dashboard = () => {
     const [jwt, setJwt] = useLocalState("", "jwt");
     const [bookData, setBookData] = useState([])
     const [searchInput, setSearchInput] = useState("")
+    const [showModal, setShowModal] = useState(false)
+    const [showModalSucces, setShowModalSucces] = useState(false)
+    const [modalElement, setModalElement] = useState("")
+    const [modalElementSucces, setModalElementSucces] = useState("")
+
+    function addReservationClick(book){
+        setModalElement(<DashboardModal toggleModal={setShowModal} setAction={() => createReservation(book.id)} modalText={`Reservering plaatsen voor: ${book.title}?`} />)
+        setShowModal(true)
+    }
+
+    function ReservationSucces(){
+        setModalElementSucces(<DashboardModalSucces toggleModalSucces={setShowModalSucces} modalText={`Reservering plaatsen gelukt!`} />)
+        setShowModalSucces(true)
+    }
 
     const filterBookElements = () => {
         const currentList = bookData.filter((book) => {
@@ -20,7 +35,7 @@ export const Dashboard = () => {
     
     const bookElements = Array.isArray(bookData) && filterBookElements().map(book => {
         return (
-            <BookClassForDashboard key={book.id} book={book} handleCreateReservation={createReservation}/>
+            <BookClassForDashboard key={book.id} book={book} handleCreateReservation={addReservationClick}/>
         )
     })
 
@@ -64,8 +79,10 @@ export const Dashboard = () => {
             body: JSON.stringify(bookId)
         })
         .then((response) => {
-            console.log(response);
-            if(response.status === 200) return response.json();
+            if(response.status === 200) {
+                ReservationSucces();
+                return response.json();
+            }
         })
         .then((data) => {
             console.log(data)
@@ -74,6 +91,8 @@ export const Dashboard = () => {
 
     return (
             <div className="dashboard-container">
+                {showModal && modalElement}
+                {showModalSucces && modalElementSucces}
                 {rows}
             </div>
     )
