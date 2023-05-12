@@ -95,8 +95,13 @@ button:active{
   opacity: .5;
 }
 
-svg:hover{
+.user-table-details:hover{
   cursor: pointer;
+}
+
+.custom-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 body{

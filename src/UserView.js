@@ -9,7 +9,7 @@ export const UserView = () => {
 
     const filterUsers = () => {
         const filteredUsers = userData.filter((user) => {
-            return user.name.toLowerCase().includes(searchInput.toLowerCase())
+            return user.name.toLowerCase().includes(searchInput.toLowerCase())||user.username.toLowerCase().includes(searchInput.toLowerCase())||user.permissions.toLowerCase().includes(searchInput.toLowerCase())
         }) 
         return filteredUsers
     } 
@@ -28,11 +28,6 @@ export const UserView = () => {
 
     return (
         <div className="container">
-
-            <div>
-                
-            </div>
-
             <div className="p-4">
                 <div className="row align-middle">
                     <div className="col">
@@ -45,7 +40,7 @@ export const UserView = () => {
                     </div>
                     
                 </div>
-                <table className="table table-striped align-middle text-center">
+                <table className="table table-bordered table-striped align-middle text-center">
                     <thead>
                         <tr>
                             <th>Naam</th>

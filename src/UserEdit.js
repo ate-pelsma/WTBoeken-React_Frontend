@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { useLocalState } from "./utils/setLocalStorage";
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { useLocalState } from "./utils/setLocalStorage"
 
-
-export const UserCreate = () => {
-
+export const UserEdit = () => {
+    
+    const {id} = useParams()
+    const [user, setUser] = useState("")
     const [jwt, setJwt] = useLocalState("", "jwt")
     const [formData, setFormData] = useState({
         name: "",
@@ -29,39 +31,49 @@ export const UserCreate = () => {
 
         let {checked, ...userData} = formData
         
-        fetch("http://localhost:8080/user/save", {
+        fetch("http://localhost:8080/user/admin/" + id, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`
             },
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify(userData)
         })
 
         window.location.href = "http://localhost:3000/users"
     };
 
+    const fetchUser = () => {
+        fetch("http://localhost:8080/user/" + id)
+        .then(r => r.json())
+        .then(d => setUser(d))
+    }
+
+    useEffect(() => {
+        fetchUser()
+    })
+
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
                 <div className="my-3">
                     <label htmlFor="nameInput" className="form-label">Naam</label>
-                    <input type="text" className="form-control" id="name" name="name" value={formData.name} onChange={handleChange} />
+                    <input type="text" placeholder={user.name} className="form-control" id="name" name="name" value={formData.name} onChange={handleChange} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="emailInput" className="form-label">Email</label>
-                    <input type="email" className="form-control" id="email" name="username" value={formData.email} onChange={handleChange} />
+                    <input type="email" placeholder={user.username} className="form-control" id="email" name="username" value={formData.email} onChange={handleChange} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="passwordInput" className="form-label">Wachtwoord</label>
-                    <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$" title="Wachtwoord moet kleine letter, hoofdletter en cijfer bevatten en tussen 8-32 tekens"/>
+                    <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} />
                 </div>
                 <div className="mb-3 form-check">
                     <input type="checkbox" className="form-check-input" id="checkbox" name="checked" checked={formData.checked} onChange={handleChange} />
                     <label className="form-check-label" htmlFor="checkbox">Admin?</label>
                 </div>
-                <button type="submit" className="buttonGreen">Aanmaken</button>
+                <button type="submit" className="buttonGreen">Bewerken</button>
             </form>
         </div>
-    );
-};
+    )
+}

@@ -11,6 +11,8 @@ import  PrivateRoute from './PrivateRoute';
 import { Dashboard } from './Dashboard';
 import { UserCreate } from './UserCreate';
 import { BookDetailsDashboard } from './BookDetailsDashboard';
+import { UserDetails } from './UserDetails';
+import { UserEdit } from './UserEdit';
 
 function App() {
 
@@ -58,6 +60,16 @@ function App() {
               <Route path="/users/create" element={
                 <PrivateRoute>
                 <UserCreate />
+                </PrivateRoute>
+                 } />
+              <Route path='/users/details/:id' element={
+                <PrivateRoute>
+                <UserDetails />
+                </PrivateRoute>
+                 } />
+              <Route path='/users/edit/:id' element={
+                <PrivateRoute>
+                <UserEdit />
                 </PrivateRoute>
                  } />
           </Routes>
