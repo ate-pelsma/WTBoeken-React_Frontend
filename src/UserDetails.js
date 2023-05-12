@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import { useLocalState } from "./utils/setLocalStorage";
 
 export const UserDetails = () => {
 
+    const [jwt, setJwt] = useLocalState("", "jwt");
     const {id} = useParams()
     const [user, setUser] = useState("")
 
     const fetchUser = () => {
-        fetch("http://localhost:8080/user/" + id)
+        fetch("http://localhost:8080/user/" + id, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET",
+        })
         .then(r => r.json())
         .then(d => setUser(d))
     }
