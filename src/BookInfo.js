@@ -65,13 +65,13 @@ export const BookInfo = () => {
                             <img src={book.image} alt="no image" style={{width: "120px"}}></img>
                         </div>
                         <div className="col-6 mt-4 d-flex justify-content-center flex-column">
-                            <p className="text-center text-md-left">{book.title}</p>
-                            <p className="text-center text-md-left">{book.isbn}</p>
-                            <p className="text-center text-md-left">{book.author}</p>
-                            <p className="text-center text-md-left">Gearchiveerd:
+                            <p className="text-left text-md-left">{book.title}</p>
+                            <p className="text-left text-md-left">{book.isbn}</p>
+                            <p className="text-left text-md-left">{book.author}</p>
+                            <p className="text-left text-md-left">Gearchiveerd:
                                 {book.archived ? <ToggleOn onClick={handleArchiveClick} size={25} className="ms-1"/> : <ToggleOff onClick={handleArchiveClick} size={25} className="ms-1"/>}
                             </p>
-                            <p className="text-center text-md-left">{book.tags}</p>
+                            <p className="text-left text-md-left">{book.tags}</p>
                         </div>
                     </div>
                 </div>

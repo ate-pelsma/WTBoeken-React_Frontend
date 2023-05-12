@@ -24,6 +24,17 @@ export const Dashboard = () => {
         )
     })
 
+    const rows = [];
+
+    for (let i = 0; i < bookElements.length; i += 4) {
+        const row = (
+            <div className="row" style={{width: '100%'}} key={i}>
+                {bookElements.slice(i, i + 4)}
+            </div>
+        );
+        rows.push(row);
+    }
+
     let fetchBooks = () => {
         fetch("http://localhost:8080/book/all",
         {
@@ -63,7 +74,7 @@ export const Dashboard = () => {
 
     return (
             <div className="dashboard-container">
-                {bookElements}
+                {rows}
             </div>
     )
 }
