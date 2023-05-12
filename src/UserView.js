@@ -27,9 +27,25 @@ export const UserView = () => {
         .then(res => res.json())
         .then(data => { setUserData(data) } )
     }
+    
+    const handleUserInactive = (id) => {
+        fetch("http://localhost:8080/user/inactive/" + id, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET",
+        })
+        .then((r) => r.json())
+        .then((d) => {
+            setUserData((prevData) =>
+            prevData.map((user) => (user.id === id ? d : user))
+            );
+        })
+    }
 
     const userTableData = filterUsers().map(user => {
-        return <User key={user.id} user={user} />
+        return <User key={user.id} user={user} handleUserInactive={handleUserInactive}/>
     })
 
     useEffect(fetchUsers, [])

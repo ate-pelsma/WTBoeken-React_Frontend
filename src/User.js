@@ -2,36 +2,27 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useLocalState } from "./utils/setLocalStorage";
 
-export const User = ({ user }) => {
+export const User = ({ user, handleUserInactive }) => {
 
     const [jwt, setJwt] = useLocalState("", "jwt");
-    const [userUpdate, setUserUpdate] = useState(user)
-    const { id, name, username } = userUpdate
+    const { id, name, username } = user
     const handleClick = () => {
         <Navigate to={`/user/details/${id}`} />
     }
 
     const role = (user.permissions === "ROLE_ADMIN") ? "Admin" : "User"
 
-    const userInactive = () => {
-        fetch("http://localhost:8080/user/inactive/" + id, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${jwt}`,
-            },
-            method: "GET",
-        })
-        // .then(r => { r.json() })
-        // .then(d => setUserUpdate(d))
+    let handleUserInactiveClick = () => {
+        handleUserInactive(id)
     }
 
     return (
         <tr onClick={handleClick}>
-            <td><Link to={`/users/details/${userUpdate.id}`} className="custom-link">{name}</Link></td>
-            <td><Link to={`/users/details/${userUpdate.id}`} className="custom-link">{username}</Link></td>
+            <td><Link to={`/users/details/${user.id}`} className="custom-link">{name}</Link></td>
+            <td><Link to={`/users/details/${user.id}`} className="custom-link">{username}</Link></td>
             <td>{role}</td>
             <td>
-                <Link to={`/users/edit/${userUpdate.id}`}>
+                <Link to={`/users/edit/${user.id}`}>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         width="16" 
@@ -52,7 +43,7 @@ export const User = ({ user }) => {
                     fill="currentColor" 
                     className="bi bi-trash-fill user-table-details" 
                     viewBox="0 0 16 16" 
-                    onClick={() => userInactive()}
+                    onClick={() => handleUserInactiveClick()}
                 >
                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                 </svg>
