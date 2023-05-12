@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useLocalState } from "./utils/setLocalStorage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
+import { WarningModal } from "./WarningModal";
 
 export const CreateBook = ({data, isbn, alert}) => {
     const [jwt, setJwt] = useLocalState("", "jwt");
@@ -17,6 +18,8 @@ export const CreateBook = ({data, isbn, alert}) => {
 
     const [newBook, setNewBook] = useState(emptyBook)
     const navigate = useNavigate();
+    const [modalElement, setModalElement] = useState("")
+    const [showModal, setShowModal] = useState(false)
 
     const updateBookForm = () => {
         if(data){
@@ -38,7 +41,7 @@ export const CreateBook = ({data, isbn, alert}) => {
     }
 
     const buildImgElement = () => {
-        const imgElement = newBook.image ? <img src={newBook.image} alt="No Image" style={{width: "300px"}}></img> : <div></div>
+        const imgElement = newBook.image ? <img src={newBook.image} alt="No Image" style={{width: "200px"}}></img> : <div></div>
         return imgElement
     }
 
@@ -89,8 +92,12 @@ export const CreateBook = ({data, isbn, alert}) => {
         })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleClick = () => {
+        setModalElement(<WarningModal toggleModal={setShowModal} setAction={postBook} modalText={"Boek Opslaan?"} />)
+        setShowModal(true)
+    }
+
+    const postBook = () => {
         try {
             const requestOptions = {
                 method: "POST",
@@ -116,31 +123,43 @@ export const CreateBook = ({data, isbn, alert}) => {
 
     return (
         <div>
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <div className="form-group">
-                    <label htmlFor="book-title">Boek Titel</label>
-                    <input value={newBook.title} onChange={(e) => setTitle(e.target.value)} id="book-title" type="text" className="form-control" placeholder="Titel"></input>
+            {showModal && modalElement}
+            <div className="container">
+                <div className="row d-flex justify-content-center">
+                    <div className="col-12">
+                        <div className="d-flex justify-content-center ">
+                            {buildImgElement()}
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-8 mt-3 mt-md-0">
+                        <form>
+                            <div className="form-group">
+                                <label htmlFor="book-title">Boek Titel</label>
+                                <input value={newBook.title} onChange={(e) => setTitle(e.target.value)} id="book-title" type="text" className="form-control" placeholder="Titel"></input>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="book-title">Boek ISBN</label>
+                                <input value={newBook.isbn} onChange={(e) => setIsbn(e.target.value)} id="book-ISBN" type="text" className="form-control" placeholder="ISBN nummer"></input>
+                            </div>
+                            <div>
+                                <label htmlFor="book-author">Boek Auteur</label>
+                                <input value={newBook.author} onChange={(e) => setAuthor(e.target.value)} id="book-author" type="text" className="form-control" placeholder="Auteur"></input>
+                            </div>
+                            <div>
+                                <label htmlFor="book-title">Afbeelding URL</label>
+                                <input value={newBook.image} onChange={(e) => setImage(e.target.value)} id="book-image" type="text" className="form-control" placeholder="Afbeelding URL"></input>
+                            </div>
+                            <div>
+                                <label htmlFor="book-stock">Aantal</label>
+                                <input value={newBook.stock} onChange={(e) => setStock(e.target.value)} id="book-stock" type="number" min="1" className="form-control" placeholder="Aantal exemplaren"></input>
+                            </div>
+                            <div className="mt-3 d-flex justify-content-center">
+                                <Button onClick={handleClick} type="button" className="buttonGreen ml-0 mt-2" variant="success">Opslaan</Button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="book-title">Boek ISBN</label>
-                    <input value={newBook.isbn} onChange={(e) => setIsbn(e.target.value)} id="book-ISBN" type="text" className="form-control" placeholder="ISBN nummer"></input>
-                </div>
-                <div>
-                    <label htmlFor="book-author">Boek Auteur</label>
-                    <input value={newBook.author} onChange={(e) => setAuthor(e.target.value)} id="book-author" type="text" className="form-control" placeholder="Auteur"></input>
-                </div>
-                <div>
-                    <label htmlFor="book-title">Afbeelding URL</label>
-                    <input value={newBook.image} onChange={(e) => setImage(e.target.value)} id="book-image" type="text" className="form-control" placeholder="Afbeelding URL"></input>
-                </div>
-                <div>
-                    <label htmlFor="book-stock">Aantal</label>
-                    <input value={newBook.stock} onChange={(e) => setStock(e.target.value)} id="book-stock" type="number" min="1" className="form-control" placeholder="Aantal exemplaren"></input>
-                </div>
-                <Button type="submit" className="mt-2" variant="success">Save Book</Button>
-            </form>
-            {buildImgElement()}
-
+            </div>
         </div>
     )
 }
