@@ -10,14 +10,12 @@ export const BookClassForDashboard = ({book, handleCreateReservation}) => {
     }
 
     return (
-        <div className="dashboard-book-container">
-            <div>
+        <div className="col-12 col-md-3 align-items-center" >
+            <div className="dashboard-book-container d-flex flex-column justify-content-center align-items-center">
                 <img src={image} alt="None" onClick={handleClick} className="dashboard-image"></img>
-            </div>
-            <div className="dashboard-title">
-                {title}
-            </div>
-            <div>
+                <div className="dashboard-title">
+                    <p>{title}</p>
+                </div>
                 <button onClick={() => handleCreateReservation(id)} className="buttonGrey"><p>Reserveer!</p></button>
             </div>
         </div>

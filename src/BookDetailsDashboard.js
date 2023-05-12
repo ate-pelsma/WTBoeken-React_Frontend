@@ -98,11 +98,12 @@ export const BookDetailsDashboard = () => {
                     <h2>Beschikbaar:</h2>
                     <div className="meter">
                         <span style={{width: `${copysAvailablePercentage}%`,
-                    backgroundColor: 
-                    copysAvailablePercentage > 10 ? 'rgb(43,194,83)' : copysAvailablePercentage > 0 ? 'orange' : 'red'}}></span>
+                                    backgroundColor: copysAvailable > 1 || copysAvailable === 1 && copyDetails.length === 1 ? 'rgb(43,194,83)' : 
+                                                     copysAvailable > 0 ? 'orange' : 'red'}}>
+                        </span>
+                        <span className="available">{copysAvailable}/{copyDetails.length}</span>
                     </div>
-                    <span>{copysAvailable}/{copyDetails.length}</span>
-                    <button onClick={() => createReservation(id)} className="buttonGreen"><h2>Reserveer!</h2></button>
+                    <button onClick={() => createReservation(id)} className="buttonBlack"><h2>Reserveer!</h2></button>
                 </div>
                 <div>
                 <img
