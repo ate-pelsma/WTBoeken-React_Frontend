@@ -44,7 +44,13 @@ export const UserEdit = () => {
     };
 
     const fetchUser = () => {
-        fetch("http://localhost:8080/user/" + id)
+        fetch("http://localhost:8080/user/" + id, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`
+            },
+            method: "GET",
+        })
         .then(r => r.json())
         .then(d => setUser(d))
     }

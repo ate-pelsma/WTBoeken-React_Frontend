@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
+import { useLocalState } from "./utils/setLocalStorage";
 
 export const User = ({ user }) => {
 
+    const [jwt, setJwt] = useLocalState("", "jwt");
     const { id, name, username } = user
     const handleClick = () => {
         <Navigate to={`/user/details/${id}`} />
@@ -11,7 +13,13 @@ export const User = ({ user }) => {
     const role = (user.permissions === "ROLE_ADMIN") ? "Admin" : "User"
 
     const userInactive = () => {
-        fetch("http://localhost:8080/user/inactive/" + id)
+        fetch("http://localhost:8080/user/inactive/" + id, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET",
+        })
         window.location.reload()
     }
 
