@@ -7,8 +7,6 @@ import { useLocalState } from "./utils/setLocalStorage"
 import { Dot } from "react-bootstrap-icons";
 
 export const Copy = ({data, bookid, setCopyDetails}) => {
-
-    const redirect = useNavigate()
     const {id, copyNumber, loaned, inactive} = data
     const [showModal, setShowModal] = useState(false)
     const [modalElement, setModalElement] = useState("")
