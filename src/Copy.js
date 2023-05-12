@@ -2,6 +2,7 @@ import { useNavigate } from "react-router"
 import { WarningModal } from "./WarningModal"
 import { useEffect, useState } from "react"
 import { setMaxListeners } from "events"
+import { useLocalState } from "./utils/setLocalStorage"
 
 import { Dot } from "react-bootstrap-icons";
 
@@ -12,6 +13,7 @@ export const Copy = ({data, bookid, setCopyDetails}) => {
     const [showModal, setShowModal] = useState(false)
     const [modalElement, setModalElement] = useState("")
     const [copyData, setCopyData] = useState(data)
+    const [jwt, setJwt] = useLocalState("", "jwt");
 
     const handleInactiveClick = () => {
         setModalElement(<WarningModal toggleModal={setShowModal} setAction={setInactive} modalText={inactive ? "Boek weer activeren?" : "Boek deactiveren?"} />)
@@ -25,7 +27,7 @@ export const Copy = ({data, bookid, setCopyDetails}) => {
     const setInactive = () => {
         fetch("http://localhost:8080/copy/inactive/" + id, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${jwt}` }
         })
         .then(r => r.json())
         .then(d => {
@@ -50,7 +52,7 @@ export const Copy = ({data, bookid, setCopyDetails}) => {
                 <td className="align-middle">{copyData.inactive ? "ja" : "nee"}</td>
                 <td className="d-flex justify-content-md-center align-middle">
                     <button onClick={handleInactiveClick} style={{minWidth: "110px"}} className="buttonGrey">{copyData.inactive ? "activeren" : "inactiveren"}</button>
-                    <button onClick={handleReservationClick} className="buttonGrey" style={{padding: "1rem"}}>toewijzen</button>
+                    <button onClick={handleReservationClick} style={{minWidth: "110px", padding: "1rem"}} className="buttonGrey">toewijzen</button>
                 </td>
                 <td>
                     {showModal && modalElement}
