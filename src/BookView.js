@@ -6,6 +6,7 @@ import { useLocalState } from './utils/setLocalStorage'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
+import { Search } from "react-bootstrap-icons";
 
 export const BookView = () => {
     const [jwt, setJwt] = useLocalState("", "jwt");
@@ -66,20 +67,21 @@ export const BookView = () => {
     }, [])
 
     return (
-        <div className="container">
+        <div className="container" style={{width: "100%"}}>
             <h2 className="text-center mt-3">Admin boek overzicht</h2>
             <div className="row">
-                <div className="col-8 justify-content-center">
-                    <div className="ms-4 mt-3">
-                        <input type="text" onChange={(e) => setSearchInput(e.target.value)} placeholder="search for title here"></input>
+                <div className="col-12 justify-content-center justify-content-md-start col-md-6">
+                    <div className="ms-4 mt-3 input-group">
+                        <input className="form-control rounded-pill" type="text" onChange={(e) => setSearchInput(e.target.value)} placeholder="zoek naar een boek"></input>
+                        <span style={{marginLeft: "-40px", zIndex: 1}} className="input-group-append mt-2"><Search /></span>
                     </div>
                 </div>
-                <div className="col-4 d-flex flex-row-reverse">
-                    <button className="buttonBlack" onClick={handleClick}>Nieuw Boek</button> 
+                <div className="col-12 justify-content-center d-flex justify-content-md-end col-md-6">
+                    <div className="p-1"><button className="buttonBlack" onClick={handleClick}>Nieuw Boek</button></div>
                 </div>
             </div>
-            <div className="p-4">
-                <table className="table">
+            <div className="row">
+                <table className="table col-12">
                     <thead>
                         <tr>
                             {tableNames}
