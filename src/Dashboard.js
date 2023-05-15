@@ -55,7 +55,7 @@ export const Dashboard = () => {
     }, [])
 
     function createReservation(bookId){
-        fetch("http://localhost:8080/reservations/save", {
+        fetch("http://localhost:8080/reservation/save", {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,

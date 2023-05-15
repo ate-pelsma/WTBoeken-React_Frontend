@@ -13,6 +13,7 @@ import { UserCreate } from './UserCreate';
 import { BookDetailsDashboard } from './BookDetailsDashboard';
 import { UserDetails } from './UserDetails';
 import { UserEdit } from './UserEdit';
+import { ReservationView } from './ReservationView';
 
 function App() {
 
@@ -70,6 +71,11 @@ function App() {
               <Route path='/users/edit/:id' element={
                 <PrivateRoute>
                 <UserEdit />
+                </PrivateRoute>
+                 } />
+              <Route path="/reservations" element={
+                <PrivateRoute>
+                <ReservationView />
                 </PrivateRoute>
                  } />
           </Routes>
