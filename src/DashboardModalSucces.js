@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './style/modal.css';
 
-export const DashboardModalSucces = ({toggleModalSucces, setAction, modalText}) => {
+export const DashboardModalSucces = ({ toggleModalSucces, setAction, modalText }) => {
 
     const handleClick = () => {
         toggleModalSucces(false)
