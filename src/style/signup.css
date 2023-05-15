@@ -1,67 +1,66 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
-html, body{
-    min-height: 100vh;
-    font-family: 'EuclidSquare', sans-serif;
+html,
+body {
+  min-height: 100vh;
+  font-family: "EuclidSquare", sans-serif;
 }
 
-.SignUpField{
-    padding: 2rem;
-    align-items: center;
-    background-color: white;
-    border-radius: 3%;
-    background: #f6f8fa;
-    display: flex;
+.SignUpField {
+  padding: 2rem;
+  align-items: center;
+  background-color: white;
+  border-radius: 3%;
+  background: #f6f8fa;
+  display: flex;
 }
 
-.SignUpField > *:first-child{
-    margin-bottom: 0;
+.SignUpField > *:first-child {
+  margin-bottom: 0;
 }
 
-.SignUpField > *:last-child{
-    margin-bottom: 0;
+.SignUpField > *:last-child {
+  margin-bottom: 0;
 }
 
-.FormContainer{
-    width: 18rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+.FormContainer {
+  width: 18rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.LoginLogo{
-    margin-top: 10px;
-    width: 6rem;
-    margin: 10px;
+.LoginLogo {
+  margin-top: 10px;
+  width: 6rem;
+  margin: 10px;
 }
 
-.LoginTitle{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+.LoginTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.Main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 85vh;
+.Main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 85vh;
 }
 
-.inputfield{
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    box-sizing: border-box;
-    border-radius: 2%;
-    outline: none;
-    margin: 0.5rem;
-    border: 1px solid #dddddd;
+.inputfield {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  border-radius: 2%;
+  outline: none;
+  margin: 0.5rem;
+  border: 1px solid #dddddd;
 }
