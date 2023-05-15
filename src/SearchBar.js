@@ -1,17 +1,50 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react";
+import { Search } from "react-bootstrap-icons";
 
-export const SearchBar = () => {
+export const SearchBar = ({
+  searchInput,
+  setSearchInput,
+  dataToFilter,
+  setFilteredData,
+  filterKeys,
+  placeholder,
+}) => {
+  const keyText = (keys, object) => {
+    let text = "";
+    keys.forEach((key) => {
+      text += " " + object[key];
+    });
+    return text.toLowerCase();
+  };
 
-    const [searchInput, setSearchInput] = useState("")
+  const filterFunction = () => {
+    let search = searchInput.toLowerCase();
+    return dataToFilter.filter((object) => {
+      return keyText(filterKeys, object).includes(search);
+    });
+  };
 
-    console.log(searchInput)
-    useEffect(() => {
-        console.log(searchInput)
-    }, [])
+  useEffect(() => {
+    setFilteredData(filterFunction());
+  }, []);
 
-    return (
-        <div className="ms-4">
-            <input type="text" onChange={(e) => setSearchInput(e.target.value)} placeholder="search for title here"></input>
-        </div>
-    )
-}
+  return (
+    <div className="ms-3 mt-3 input-group">
+      <span style={{ width: "5px" }}></span>
+      <input
+        autoFocus={true}
+        className="rounded-pill col-12 col-md-6 p-2"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+        type="text"
+        placeholder={placeholder}
+      ></input>
+      <span
+        style={{ marginLeft: "-30px", zIndex: 1, marginTop: "10px" }}
+        className="input-group-append"
+      >
+        <Search />
+      </span>
+    </div>
+  );
+};
