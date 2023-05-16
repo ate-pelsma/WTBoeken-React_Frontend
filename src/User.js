@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useLocalState } from "./utils/setLocalStorage";
 
 export const User = ({ user, handleUserInactive }) => {
 
-    const [jwt, setJwt] = useLocalState("", "jwt");
     const { id, name, username } = user
     const handleClick = () => {
         <Navigate to={`/user/details/${id}`} />
@@ -18,11 +16,11 @@ export const User = ({ user, handleUserInactive }) => {
 
     return (
         <tr onClick={handleClick}>
-            <td><Link to={`/users/details/${user.id}`} className="custom-link">{name}</Link></td>
-            <td><Link to={`/users/details/${user.id}`} className="custom-link">{username}</Link></td>
+            <td><Link to={`/users/details/${id}`} className="custom-link">{name}</Link></td>
+            <td><Link to={`/users/details/${id}`} className="custom-link">{username}</Link></td>
             <td>{role}</td>
             <td>
-                <Link to={`/users/edit/${user.id}`}>
+                <Link to={`/users/edit/${id}`}>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         width="16" 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useLocalState } from "./utils/setLocalStorage"
+import { Reservation } from "./Reservation"
 
 export const ReservationView = () => {
     const [jwt, setJwt] = useLocalState("","jwt")
@@ -14,8 +15,12 @@ export const ReservationView = () => {
             method: "GET",
         })
         .then(r => r.json())
-        .then(d => { setReservationData(d) })
+        .then(d => { console.log(d);setReservationData(d) })
     }
+
+    const reservationTableData = reservationData.map(reservation => {
+        return <Reservation key={reservation.id} reservation={reservation}/>
+    })
 
     useEffect(fetchReservations, [])
 
@@ -31,10 +36,12 @@ export const ReservationView = () => {
                             <th>Boek</th>
                             <th>Gebruiker</th>
                             <th>Aanvraagdatum</th>
+                            <th>Status</th>
+                            <th>Toewijzen</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        {reservationTableData}
                     </tbody>
                 </table>
             </div>
