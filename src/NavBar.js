@@ -22,7 +22,6 @@ export default function NavBar() {
   }
 
   function setNavBar() {
-    console.log(roles);
     let links;
     if (roles[0] === "ROLE_ADMIN") {
       links = (
@@ -42,7 +41,7 @@ export default function NavBar() {
           <Nav.Link href="/users" className="navLinks">
             Gebruikers overzicht
           </Nav.Link>
-          <Nav.Link href="/ReservationsSummary" className="navLinks">
+          <Nav.Link href="/reservations" className="navLinks">
             Reserveringen overzicht
           </Nav.Link>
         </>

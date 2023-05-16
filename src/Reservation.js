@@ -1,14 +1,27 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import fetchTemplate from "./Services/FetchTemplate"
+import { useLocalState } from "./utils/setLocalStorage"
 
 export const Reservation = ({reservation}) => {
+
     const { id, reqDate, status, bookid, bookTitle, userid, userName } = reservation
+    const [copysAvailable, setCopysAvailable] = useState([])
+    const [jwt, setJwt] = useLocalState("", "jwt")
+
+    let fetchCopys = () => {
+        fetchTemplate(`/book/${bookid}/copy/available`, "GET", jwt).then(r => setCopysAvailable(r))
+    }
+
+    useEffect(fetchCopys, [])
 
     return (
         <tr>
-            <td>{bookTitle}</td>
             <td>{userName}</td>
+            <td>{bookTitle}</td>
             <td>{reqDate}</td>
             <td>{status.toLowerCase()}</td>
+            <td>{copysAvailable.length}</td>
             <td>
                 <Link to={`/reservations/${id}`}>
                     <svg 

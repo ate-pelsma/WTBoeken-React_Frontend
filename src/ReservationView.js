@@ -15,7 +15,7 @@ export const ReservationView = () => {
             method: "GET",
         })
         .then(r => r.json())
-        .then(d => { console.log(d);setReservationData(d) })
+        .then(d => { setReservationData(d) })
     }
 
     const reservationTableData = reservationData.map(reservation => {
@@ -33,10 +33,11 @@ export const ReservationView = () => {
                 <table className="table table-striped align-middle text-center">
                     <thead>
                         <tr>
-                            <th>Boek</th>
                             <th>Gebruiker</th>
+                            <th>Boek</th>
                             <th>Aanvraagdatum</th>
                             <th>Status</th>
+                            <th>Beschikbaar</th>
                             <th>Toewijzen</th>
                         </tr>
                     </thead>
