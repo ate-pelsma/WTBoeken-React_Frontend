@@ -10,7 +10,7 @@ export const Reservation = ({reservation}) => {
             <td>{reqDate}</td>
             <td>{status.toLowerCase()}</td>
             <td>
-                <Link to={`/reservations/details/${id}`}>
+                <Link to={`/reservations/${id}`}>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         width="16" height="16" 

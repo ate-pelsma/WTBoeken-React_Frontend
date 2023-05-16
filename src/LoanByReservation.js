@@ -46,7 +46,7 @@ export const LoanByReservation = () => {
   };
 
   let fetchReservation = () => {
-    fetchTemplate(`/reservations/${id}`, "GET", jwt).then((data) => {
+    fetchTemplate(`/reservation/${id}`, "GET", jwt).then((data) => {
       setReservationData(data);
       const { id, book, username } = data;
       setReservationId(id);
@@ -82,6 +82,8 @@ export const LoanByReservation = () => {
       handleLoanClick={handleLoanClick}
     />
   ));
+
+  console.log(`ID:${id}        ResID:${reservationId} `)
 
   if (loadingStatus === false) {
     return;
