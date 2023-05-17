@@ -29,7 +29,7 @@ export const SearchBar = ({
   }, []);
 
   return (
-    <div className="ms-3 mt-3 input-group">
+    <div className="mt-3 input-group">
       <span style={{ width: "5px" }}></span>
       <input
         autoFocus={true}
