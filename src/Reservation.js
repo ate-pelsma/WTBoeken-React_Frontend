@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import fetchTemplate from "./Services/FetchTemplate"
 import { useLocalState } from "./utils/setLocalStorage"
 
@@ -8,6 +8,7 @@ export const Reservation = ({reservation}) => {
     const { id, reqDate, status, bookid, bookTitle, userid, userName } = reservation
     const [copysAvailable, setCopysAvailable] = useState([])
     const [jwt, setJwt] = useLocalState("", "jwt")
+    const navigate = useNavigate()
 
     let fetchCopys = () => {
         fetchTemplate(`/book/${bookid}/copy/available`, "GET", jwt).then(r => setCopysAvailable(r))
@@ -17,8 +18,8 @@ export const Reservation = ({reservation}) => {
 
     return (
         <tr>
-            <td>{userName}</td>
-            <td>{bookTitle}</td>
+            <td><span className="pointer-hover" onClick={() => navigate(`/users/details/${userid}`)}>{userName}</span></td>
+            <td><span className="pointer-hover" onClick={() => navigate(`/books/details/${bookid}`)}>{bookTitle}</span></td>
             <td>{reqDate}</td>
             <td>{status.toLowerCase()}</td>
             <td>{copysAvailable.length}</td>

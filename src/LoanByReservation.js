@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useLocalState } from "./utils/setLocalStorage";
 import { useState, useEffect } from "react";
 import { WarningModal } from "./WarningModal";
@@ -23,33 +23,33 @@ export const LoanByReservation = () => {
   };
 
   const handleLoanClick = (copyData, reservationId) => {
-    console.log(reservationId);
     setModalElement(
       <WarningModal
         toggleModal={setShowModal}
         setAction={() => makeLoan(copyData.id, reservationId)}
-        modalText={`Exemplaar ${copyData.copyNumber} van ${bookData.title} toewijzen aan ${userData.username}?`}
+        modalText={`Exemplaar ${copyData.copyNumber} van ${bookData.title} toewijzen aan ${userData.name}?`}
       />
     );
     setShowModal(true);
   };
 
   const makeLoan = (copyId, reservationId) => {
-    console.log(copyId, reservationId);
     // fetchTemplate(
     //   `/book/${reservationData.book.id}/copy/available`,
     //   "POST",
     //   jwt,
     //   (copy, user)
     // );
+    fetchTemplate(`/loan/save/reservation/${reservationId}/${copyId}`, "POST", jwt)
+    navigate("/reservations")
   };
 
   let fetchData = () => {
     const url = `/reservation/${id}`;
-    
     fetchTemplate(url, "GET", jwt)
       .then(data => {
-        setReservationData(data);
+        setReservationData(data)
+        
         return Promise.all([
           fetchTemplate(`/book/${data.bookid}`, "GET", jwt),
           fetchTemplate(`/user/${data.userid}`, "GET", jwt),
@@ -64,15 +64,6 @@ export const LoanByReservation = () => {
         console.error('Error fetching reservation:', error);
       });
   }
-
-  // let fetchAvailableCopies = () => {
-  //   console.log(bookData.id)
-  //   fetchTemplate(`/book/${bookData.id}/copy/available`, "GET", jwt).then(
-  //     (data) => {
-  //       setCopysAvailable(data);
-  //     }
-  //   );
-  // };
 
   useEffect(() => {
     fetchData();
@@ -113,8 +104,8 @@ export const LoanByReservation = () => {
             </thead>
             <tbody>
               <tr>
-                <td>{userData.name}</td>
-                <td>{bookData.title}</td>
+                <td><span className="pointer-hover" onClick={() => navigate(`/users/details/${userData.id}`)}>{userData.name}</span></td>
+                <td><span className="pointer-hover" onClick={() => navigate(`/books/details/${bookData.id}`)}>{bookData.title}</span></td>
                 <td>{reservationData.reqDate}</td>
               </tr>
             </tbody>

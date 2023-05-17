@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { User } from "./User"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useLocalState } from "./utils/setLocalStorage";
 
 export const UserView = () => {
     const [jwt, setJwt] = useLocalState("", "jwt");
-
+    const navigate = useNavigate()
     const [userData, setUserData] = useState([])
     const [searchInput, setSearchInput] = useState("")
 
@@ -58,13 +58,11 @@ export const UserView = () => {
                         <input type="text" className="mb-5" onChange={(e) => setSearchInput(e.target.value)} placeholder="Gebruiker zoeken"></input>
                     </div>
                     <div className="col-auto">
-                        <Link to="/users/create">
-                            <button className="btn buttonGreen">Gebruiker toevoegen</button>
-                        </Link>
+                        <button className="btn buttonGreen" onClick={() => navigate("/users/create")}>Gebruiker toevoegen</button>
                     </div>
                     
                 </div>
-                <table className="table table-bordered table-striped align-middle text-center">
+                <table className="table table-striped align-middle text-center">
                     <thead>
                         <tr>
                             <th>Naam</th>

@@ -92,13 +92,8 @@ button:active {
   opacity: 0.5;
 }
 
-.user-table-details:hover {
+.pointer-hover {
   cursor: pointer;
-}
-
-.custom-link {
-  text-decoration: none;
-  color: inherit;
 }
 
 body {
