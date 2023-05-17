@@ -11,6 +11,7 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalElement, setModalElement] = useState("");
   const [copyData, setCopyData] = useState(data);
+  const [copyDto, setCopyDto] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
   const navigate = useNavigate();
 
@@ -63,6 +64,22 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
     });
   };
 
+  const fetchCopy = () => {
+    fetch(`http://localhost:8080/copy/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      method: "GET",
+    })
+      .then((r) => r.json())
+      .then((d) => setCopyDto(d));
+  };
+
+  useEffect(() => {
+    fetchCopy();
+  }, []);
+
   const loanCopyButton = (
     <button
       onClick={
@@ -89,7 +106,7 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
           <Dot fill="green" size={60} />
         )}
       </td>
-      <td className="align-middle">{}</td>
+      <td className="align-middle">{copyDto.activeLoanName}</td>
       <td className="align-middle">{copyData.inactive ? "ja" : "nee"}</td>
       <td className="d-flex justify-content-md-center align-middle">
         <button

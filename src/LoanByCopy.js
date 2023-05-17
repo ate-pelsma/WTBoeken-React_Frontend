@@ -4,12 +4,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useLocalState } from "./utils/setLocalStorage";
 import userEvent from "@testing-library/user-event";
 import { SearchBar } from "./SearchBar";
+import { WarningModal } from "./WarningModal";
 
 export const LoanByCopy = () => {
   const [copyData, setCopyData] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalElement, setModalElement] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
   const { id } = useParams();
   const navigate = useNavigate();
@@ -24,8 +27,31 @@ export const LoanByCopy = () => {
     );
   });
 
-  const handleClick = (userId) => {
+  const handleClick = (user) => {
+    setModalElement(
+      <WarningModal
+        toggleModal={setShowModal}
+        setAction={() => assignCopyToUser(copyData.copyId, user.id)}
+        modalText={`Kopie ${copyData.bookId}.${copyData.copyNumber} aan gebruiker ${user.name} uitlenen?`}
+      />
+    );
+    setShowModal(true);
+  };
+
+  const assignCopyToUser = (copyId, userId) => {
+    console.log(copyId);
     console.log(userId);
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    fetch(
+      `http://localhost:8080/loan/save/${copyId}/${userId}`,
+      requestOptions
+    ).then((r) => console.log(r));
   };
 
   const userDataElement = filteredUsers.map((user) => {
@@ -34,30 +60,29 @@ export const LoanByCopy = () => {
         <td>{user.name}</td>
         <td>{user.username}</td>
         <td>
-          <button onClick={() => handleClick(user.id)}>Toewijzen</button>
+          <button onClick={() => handleClick(user)}>Toewijzen</button>
         </td>
       </tr>
     );
   });
 
-  const fetchCopy = async () => {
-    const response = await fetchTemplate(`/copy/${id}`, "GET", jwt);
-    setCopyData(response);
-  };
-
-  const fetchUsers = async () => {
-    const response = await fetchTemplate("/user/all", "GET", jwt);
-    setAllUsers(response);
-    setFilteredUsers(response);
-  };
-
   useEffect(() => {
+    const fetchCopy = async () => {
+      const response = await fetchTemplate(`/copy/${id}`, "GET", jwt);
+      setCopyData(response);
+    };
     fetchCopy();
+    const fetchUsers = async () => {
+      const response = await fetchTemplate("/user/all", "GET", jwt);
+      setAllUsers(response);
+      setFilteredUsers(response);
+    };
     fetchUsers();
-  }, []);
+  }, [id, jwt]);
 
   return (
     <div className="container">
+      {showModal && modalElement}
       <div className="row mt-3">
         <h1 className="col-12 col-md-9">Kopie informatie</h1>
         <div className="col-12 col-md-3 d-flex justify-content-md-end">

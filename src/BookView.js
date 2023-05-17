@@ -41,6 +41,12 @@ export const BookView = () => {
     navigate("/books/create");
   };
 
+  const sortData = (data) => {
+    return data.sort((a, b) => {
+      return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+    });
+  };
+
   let fetchBooks = () => {
     fetch("http://localhost:8080/book/all", {
       headers: {
@@ -51,8 +57,9 @@ export const BookView = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setBookData(data);
-        setFilteredData(data);
+        const sortedData = sortData(data);
+        setBookData(sortedData);
+        setFilteredData(sortedData);
       });
   };
 
