@@ -1,10 +1,21 @@
 import { useEffect } from "react";
 import "./style/modal.css";
+import { useNavigate } from "react-router-dom";
 
-export const WarningModal = ({ toggleModal, setAction, modalText }) => {
+export const WarningModal = ({
+  toggleModal,
+  setAction,
+  modalText,
+  redirect,
+}) => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
     setAction();
     toggleModal(false);
+    if (redirect) {
+      navigate(-1);
+    }
   };
 
   return (

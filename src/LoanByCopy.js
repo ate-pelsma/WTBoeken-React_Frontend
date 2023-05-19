@@ -33,6 +33,7 @@ export const LoanByCopy = () => {
         toggleModal={setShowModal}
         setAction={() => assignCopyToUser(copyData.copyId, user.id)}
         modalText={`Kopie ${copyData.bookId}.${copyData.copyNumber} aan gebruiker ${user.name} uitlenen?`}
+        redirect={true}
       />
     );
     setShowModal(true);

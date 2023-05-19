@@ -80,6 +80,14 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
     fetchCopy();
   }, []);
 
+  const dotElement = copyData.inactive ? (
+    <Dot fill="red" size={60} />
+  ) : loaned ? (
+    <Dot fill="orange" size={60} />
+  ) : (
+    <Dot fill="green" size={60} />
+  );
+
   const loanCopyButton = (
     <button
       onClick={
@@ -99,13 +107,7 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
       <th className="align-middle" scope="row">
         {copyNumber}
       </th>
-      <td className="align-middle">
-        {loaned || copyData.inactive ? (
-          <Dot fill="orange" size={60} />
-        ) : (
-          <Dot fill="green" size={60} />
-        )}
-      </td>
+      <td className="align-middle">{dotElement}</td>
       <td className="align-middle">{copyDto.activeLoanName}</td>
       <td className="align-middle">{copyData.inactive ? "ja" : "nee"}</td>
       <td className="d-flex justify-content-md-center align-middle">
