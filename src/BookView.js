@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
 import { Search } from "react-bootstrap-icons";
+import { SortData } from "./Services/SortData";
 
 export const BookView = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
@@ -41,12 +42,6 @@ export const BookView = () => {
     navigate("/books/create");
   };
 
-  const sortData = (data) => {
-    return data.sort((a, b) => {
-      return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
-    });
-  };
-
   let fetchBooks = () => {
     fetch("http://localhost:8080/book/all", {
       headers: {
@@ -57,7 +52,7 @@ export const BookView = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        const sortedData = sortData(data);
+        const sortedData = SortData(data);
         setBookData(sortedData);
         setFilteredData(sortedData);
       });
