@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
 import { Search } from "react-bootstrap-icons";
+import { SortData } from "./Services/SortData";
 
 export const BookView = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
@@ -51,8 +52,9 @@ export const BookView = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setBookData(data);
-        setFilteredData(data);
+        const sortedData = SortData(data);
+        setBookData(sortedData);
+        setFilteredData(sortedData);
       });
   };
 

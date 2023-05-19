@@ -11,7 +11,9 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalElement, setModalElement] = useState("");
   const [copyData, setCopyData] = useState(data);
+  const [copyDto, setCopyDto] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
+  const navigate = useNavigate();
 
   const handleInactiveClick = () => {
     setModalElement(
@@ -25,7 +27,18 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
   };
 
   const handleReservationClick = () => {
-    console.log("toewijs actie");
+    navigate(`/copies/${id}`);
+  };
+
+  const handleReservationClickForInactiveCopy = () => {
+    setModalElement(
+      <WarningModal
+        toggleModal={setShowModal}
+        setAction={handleReservationClick}
+        modalText={"Inactief boek uitlenen?"}
+      />
+    );
+    setShowModal(true);
   };
 
   const setInactive = () => {
@@ -51,19 +64,51 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
     });
   };
 
+  const fetchCopy = () => {
+    fetch(`http://localhost:8080/copy/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      method: "GET",
+    })
+      .then((r) => r.json())
+      .then((d) => setCopyDto(d));
+  };
+
+  useEffect(() => {
+    fetchCopy();
+  }, []);
+
+  const dotElement = copyData.inactive ? (
+    <Dot fill="red" size={60} />
+  ) : loaned ? (
+    <Dot fill="orange" size={60} />
+  ) : (
+    <Dot fill="green" size={60} />
+  );
+
+  const loanCopyButton = (
+    <button
+      onClick={
+        copyData.inactive
+          ? handleReservationClickForInactiveCopy
+          : handleReservationClick
+      }
+      style={{ minWidth: "110px", padding: "2px" }}
+      className="buttonGrey"
+    >
+      toewijzen
+    </button>
+  );
+
   return (
     <tr>
       <th className="align-middle" scope="row">
         {copyNumber}
       </th>
-      <td className="align-middle">
-        {loaned || copyData.inactive ? (
-          <Dot fill="orange" size={60} />
-        ) : (
-          <Dot fill="green" size={60} />
-        )}
-      </td>
-      <td className="align-middle">{}</td>
+      <td className="align-middle">{dotElement}</td>
+      <td className="align-middle">{copyDto.activeLoanName}</td>
       <td className="align-middle">{copyData.inactive ? "ja" : "nee"}</td>
       <td className="d-flex justify-content-md-center align-middle">
         <button
@@ -73,13 +118,7 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
         >
           {copyData.inactive ? "activeren" : "inactiveren"}
         </button>
-        <button
-          onClick={handleReservationClick}
-          style={{ minWidth: "110px", padding: "1rem" }}
-          className="buttonGrey"
-        >
-          toewijzen
-        </button>
+        {!copyData.inactive && loanCopyButton}
       </td>
       <td>{showModal && modalElement}</td>
     </tr>

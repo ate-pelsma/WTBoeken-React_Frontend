@@ -29,7 +29,7 @@ export const SearchBar = ({
   }, []);
 
   return (
-    <div className="ms-3 mt-3 input-group">
+    <div className="mt-3 input-group">
       <span style={{ width: "5px" }}></span>
       <input
         autoFocus={true}
@@ -40,7 +40,7 @@ export const SearchBar = ({
         placeholder={placeholder}
       ></input>
       <span
-        style={{ marginLeft: "-30px", zIndex: 1, marginTop: "10px" }}
+        style={{ marginLeft: "-30px", marginTop: "10px" }}
         className="input-group-append"
       >
         <Search />

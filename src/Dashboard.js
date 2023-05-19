@@ -6,6 +6,7 @@ import { useLocalState } from "./utils/setLocalStorage";
 import { BookClassForDashboard } from "./BookClassForDashboard";
 import { DashboardModalSucces } from "./DashboardModalSucces";
 import fetchTemplate from "./Services/FetchTemplate";
+import { SortData } from "./Services/SortData";
 
 export const Dashboard = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
@@ -39,7 +40,8 @@ export const Dashboard = () => {
 
   let fetchBooks = () => {
     fetchTemplate(`/book/all`, "GET", jwt).then((data) => {
-      setBookData(data);
+      const sortedData = SortData(data);
+      setBookData(sortedData);
     });
   };
 
