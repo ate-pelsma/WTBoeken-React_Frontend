@@ -21,7 +21,7 @@ export const Reservation = ({reservation}) => {
             <td><span className="pointer-hover" onClick={() => navigate(`/users/details/${userid}`)}>{userName}</span></td>
             <td><span className="pointer-hover" onClick={() => navigate(`/books/details/${bookid}`)}>{bookTitle}</span></td>
             <td>{reqDate}</td>
-            <td>{status.toLowerCase()}</td>
+            {/* <td>{status.toLowerCase()}</td> */}
             <td>{copysAvailable.length}</td>
             <td>
                 <Link to={`/reservations/${id}`}>
