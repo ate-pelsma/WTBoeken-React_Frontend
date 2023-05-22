@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useLocalState } from "./utils/setLocalStorage";
@@ -12,6 +12,7 @@ export default function NavBar() {
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [roles, setRoles] = useState(getRolesFromJWT());
   const [navBarLinks, setNavBarLinks] = useState("");
+  const navigate = useNavigate();
 
   function getRolesFromJWT() {
     if (jwt) {
@@ -21,8 +22,13 @@ export default function NavBar() {
     return [];
   }
 
+  const logOutClick = () => {
+    setJwt(null);
+    localStorage.setItem("jwt", null);
+    window.location.href = "/login";
+  };
+
   function setNavBar() {
-    console.log(roles);
     let links;
     if (roles[0] === "ROLE_ADMIN") {
       links = (
@@ -31,7 +37,7 @@ export default function NavBar() {
             Catalogus
           </Nav.Link>
           <Nav.Link href="/MyReservations" className="navLinks">
-            Mijn Reserveringen
+            Mijn Boeken
           </Nav.Link>
           <Nav.Link href="/MyAccount" className="navLinks">
             Mijn Account
@@ -45,6 +51,9 @@ export default function NavBar() {
           <Nav.Link href="/ReservationsSummary" className="navLinks">
             Reserveringen overzicht
           </Nav.Link>
+          <Nav.Link href="#" className="navLinks" onClick={logOutClick}>
+            Log uit
+          </Nav.Link>
         </>
       );
     } else if (roles[0] === "ROLE_USER") {
@@ -54,10 +63,13 @@ export default function NavBar() {
             Catalogus
           </Nav.Link>
           <Nav.Link href="/MyReservations" className="navLinks">
-            Mijn Reserveringen
+            Mijn Boeken
           </Nav.Link>
           <Nav.Link href="/MyAccount" className="navLinks">
             Mijn Account
+          </Nav.Link>
+          <Nav.Link href="#" className="navLinks" onClick={logOutClick}>
+            Log uit
           </Nav.Link>
         </>
       );
