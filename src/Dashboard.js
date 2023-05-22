@@ -84,7 +84,7 @@ export const Dashboard = () => {
   }, []);
 
   function createReservation(bookId) {
-    fetchTemplate(`/reservations/save`, "POST", jwt, bookId).then(() => {
+    fetchTemplate(`/reservation/save`, "POST", jwt, bookId).then(() => {
       ReservationSucces();
     });
   }

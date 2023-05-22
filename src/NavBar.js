@@ -36,7 +36,7 @@ export default function NavBar() {
           <Nav.Link href="/" className="navLinks">
             Catalogus
           </Nav.Link>
-          <Nav.Link href="/MyReservations" className="navLinks">
+          <Nav.Link href="/mybooks" className="navLinks">
             Mijn Boeken
           </Nav.Link>
           <Nav.Link href="/MyAccount" className="navLinks">
@@ -62,7 +62,7 @@ export default function NavBar() {
           <Nav.Link href="/" className="navLinks">
             Catalogus
           </Nav.Link>
-          <Nav.Link href="/MyReservations" className="navLinks">
+          <Nav.Link href="/mybooks" className="navLinks">
             Mijn Boeken
           </Nav.Link>
           <Nav.Link href="/MyAccount" className="navLinks">
