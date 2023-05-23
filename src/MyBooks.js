@@ -55,7 +55,10 @@ export const MyBooks = () => {
         <td>{res.bookAuthor}</td>
         <td>{res.bookIsbn}</td>
         <td>
-          <button onClick={() => handleClick(res.reservationId)}>
+          <button
+            className="buttonGrey"
+            onClick={() => handleClick(res.reservationId)}
+          >
             annuleren
           </button>
         </td>

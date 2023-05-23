@@ -24,6 +24,22 @@ export const BookClassForDashboard = ({ book, handleCreateReservation }) => {
     });
   };
 
+  const handleReservationClick = () => {
+    fetchTemplate("/user/reservations", "GET", jwt).then((r) => {
+      let bookAlreadyReserved = false;
+      r.map((res) => {
+        if (res.bookIsbn === book.isbn) {
+          bookAlreadyReserved = true;
+        }
+      });
+      if (bookAlreadyReserved) {
+        alert("U heeft dit boek al gereserveerd");
+      } else {
+        handleCreateReservation(book);
+      }
+    });
+  };
+
   useEffect(() => {
     fetchCopies();
   }, []);
@@ -72,10 +88,7 @@ export const BookClassForDashboard = ({ book, handleCreateReservation }) => {
         <div className="dashboard-title">
           <p>{title}</p>
         </div>
-        <button
-          onClick={() => handleCreateReservation(book)}
-          className="buttonGrey"
-        >
+        <button onClick={handleReservationClick} className="buttonGrey">
           <p>Reserveer!</p>
         </button>
       </div>
