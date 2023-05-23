@@ -16,6 +16,8 @@ import { UserEdit } from "./UserEdit";
 import { UserSelf } from "./UserSelf";
 import { LoanByReservation } from "./LoanByReservation";
 import { LoanByCopy } from "./LoanByCopy";
+import { MyBooks } from "./MyBooks";
+import { CopyDetailsView } from "./CopyDetailsView";
 import { ReservationView } from "./ReservationView";
 
 function App() {
@@ -131,6 +133,22 @@ function App() {
             element={
               <PrivateRoute>
                 <LoanByCopy />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/mybooks"
+            element={
+              <PrivateRoute>
+                <MyBooks />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/copy/details/:id"
+            element={
+              <PrivateRoute>
+                <CopyDetailsView />
               </PrivateRoute>
             }
           />

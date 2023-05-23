@@ -7,6 +7,12 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
 
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      SendLogin();
+    }
+  };
+
   function SendLogin() {
     var newLoginAttempt = {};
     newLoginAttempt.username = username;
@@ -63,6 +69,7 @@ export default function Login() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e)}
             className="inputfield"
           />
 

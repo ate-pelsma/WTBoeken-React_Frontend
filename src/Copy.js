@@ -95,7 +95,7 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
           ? handleReservationClickForInactiveCopy
           : handleReservationClick
       }
-      style={{ minWidth: "110px", padding: "2px" }}
+      style={{ minWidth: "110px", padding: "2px", minHeight: "40px" }}
       className="buttonGrey"
     >
       toewijzen
@@ -110,15 +110,24 @@ export const Copy = ({ data, bookid, setCopyDetails }) => {
       <td className="align-middle">{dotElement}</td>
       <td className="align-middle">{copyDto.activeLoanName}</td>
       <td className="align-middle">{copyData.inactive ? "ja" : "nee"}</td>
-      <td className="d-flex justify-content-md-center align-middle">
-        <button
-          onClick={handleInactiveClick}
-          style={{ minWidth: "110px" }}
-          className="buttonGrey"
-        >
-          {copyData.inactive ? "activeren" : "inactiveren"}
-        </button>
-        {!copyData.inactive && loanCopyButton}
+      <td className="align-middle">
+        <div className="d-flex justify-content-center">
+          <button
+            onClick={handleInactiveClick}
+            style={{ minWidth: "110px" }}
+            className="buttonGrey"
+          >
+            {copyData.inactive ? "activeren" : "inactiveren"}
+          </button>
+          {!copyData.inactive && loanCopyButton}
+          <button
+            onClick={() => navigate(`/copy/details/${id}`)}
+            className="buttonGrey"
+            style={{ minWidth: "110px" }}
+          >
+            details
+          </button>
+        </div>
       </td>
       <td>{showModal && modalElement}</td>
     </tr>
