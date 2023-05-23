@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLocalState } from "./utils/setLocalStorage";
 
 export const UserEdit = () => {
   const { id } = useParams();
   const [user, setUser] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -38,7 +39,7 @@ export const UserEdit = () => {
       body: JSON.stringify(userData),
     });
 
-    window.location.href = "http://localhost:3000/users";
+    navigate("/users")
   };
 
   const fetchUser = () => {
@@ -53,9 +54,7 @@ export const UserEdit = () => {
       .then((d) => setUser(d));
   };
 
-  useEffect(() => {
-    fetchUser();
-  });
+  useEffect(() => fetchUser(), [])
 
   return (
     <div className="container">
@@ -99,6 +98,23 @@ export const UserEdit = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            required="required"
+            pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"
+            title="Wachtwoord moet kleine letter, hoofdletter en cijfer bevatten en tussen 8-32 tekens"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="passwordConfirmInput" className="form-label">Wachtwoord bevestigen</label>
+          <input
+            type="password"
+            className="form-control"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required="required"
+            pattern={`^${formData.password}$`}
+            title="Wachtwoorden komen niet overeen"
           />
         </div>
         <div className="mb-3 form-check">

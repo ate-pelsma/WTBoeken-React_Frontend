@@ -2,19 +2,14 @@ import { useState, useEffect } from "react"
 import { User } from "./User"
 import { useNavigate } from "react-router-dom"
 import { useLocalState } from "./utils/setLocalStorage";
+import { SearchBar } from "./SearchBar";
 
 export const UserView = () => {
     const [jwt, setJwt] = useLocalState("", "jwt");
     const navigate = useNavigate()
     const [userData, setUserData] = useState([])
     const [searchInput, setSearchInput] = useState("")
-
-    const filterUsers = () => {
-        const filteredUsers = userData.filter((user) => {
-            return user.name.toLowerCase().includes(searchInput.toLowerCase())||user.username.toLowerCase().includes(searchInput.toLowerCase())||user.permissions.toLowerCase().includes(searchInput.toLowerCase())
-        }) 
-        return filteredUsers
-    } 
+    const [filteredData, setFilteredData] = useState([])
 
     let fetchUsers = () => {
         fetch("http://localhost:8080/user/all", {
@@ -25,7 +20,10 @@ export const UserView = () => {
             method: "GET",
         })
         .then(res => res.json())
-        .then(data => { setUserData(data) } )
+        .then(data => { 
+            setUserData(data)
+            setFilteredData(data) 
+        } )
     }
     
     const handleUserInactive = (id) => {
@@ -44,7 +42,7 @@ export const UserView = () => {
         })
     }
 
-    const userTableData = filterUsers().map(user => {
+    const userTableData = filteredData.map(user => {
         return <User key={user.id} user={user} handleUserInactive={handleUserInactive}/>
     })
 
@@ -54,10 +52,18 @@ export const UserView = () => {
         <div className="container">
             <div className="p-4">
                 <div className="row align-middle">
-                    <div className="col">
-                        <input type="text" className="mb-5" onChange={(e) => setSearchInput(e.target.value)} placeholder="Gebruiker zoeken"></input>
+                    <div className="col-12 justify-content-center justify-content-md-start col-md-6">
+                        <SearchBar
+                            key={searchInput}
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
+                            dataToFilter={userData}
+                            setFilteredData={setFilteredData}
+                            filterKeys={["name", "username", "permissions"]}
+                            placeholder={"zoek gebruiker hier"}
+                        />
                     </div>
-                    <div className="col-auto">
+                    <div className="col-12 justify-content-center d-flex justify-content-md-end col-md-6">
                         <button className="btn buttonGreen" onClick={() => navigate("/users/create")}>Gebruiker toevoegen</button>
                     </div>
                     

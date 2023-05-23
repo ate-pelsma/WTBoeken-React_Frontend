@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useLocalState } from "./utils/setLocalStorage";
-import { useNavigate } from "react-router-dom";
 
-export const UserCreate = () => {
+export const UserEdit = () => {
+  const { id } = useParams();
+  const [user, setUser] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     username: "",
     password: "",
-    confirmPassword: "",
     permissions: "",
     checked: false,
   });
@@ -27,19 +27,33 @@ export const UserCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let { checked, confirmPassword, ...userData } = formData;
+    let { checked, ...userData } = formData;
 
-    fetch("http://localhost:8080/user/save", {
+    fetch("http://localhost:8080/user/update/" + id, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
       },
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(userData),
     });
 
-    navigate("/users");
+    window.location.href = "http://localhost:3000/users";
   };
+
+  const fetchUser = () => {
+    fetch("http://localhost:8080/user/self", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      method: "GET",
+    })
+      .then((r) => r.json())
+      .then((d) => setUser(d));
+  };
+
+  useEffect(() => fetchUser(), [])
 
   return (
     <div className="container">
@@ -50,6 +64,7 @@ export const UserCreate = () => {
           </label>
           <input
             type="text"
+            placeholder={user.name}
             className="form-control"
             id="name"
             name="name"
@@ -63,10 +78,11 @@ export const UserCreate = () => {
           </label>
           <input
             type="email"
+            placeholder={user.username}
             className="form-control"
             id="email"
             name="username"
-            value={formData.username}
+            value={formData.email}
             onChange={handleChange}
           />
         </div>
@@ -114,7 +130,7 @@ export const UserCreate = () => {
           </label>
         </div>
         <button type="submit" className="buttonGreen">
-          Aanmaken
+          Bewerken
         </button>
       </form>
     </div>

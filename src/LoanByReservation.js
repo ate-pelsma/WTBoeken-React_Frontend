@@ -40,7 +40,15 @@ export const LoanByReservation = () => {
     //   jwt,
     //   (copy, user)
     // );
-    fetchTemplate(`/loan/save/reservation/${reservationId}/${copyId}`, "POST", jwt)
+
+    fetch(`http://localhost:8080/loan/save/reservation/${reservationId}/${copyId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+    },
+    method: "POST",
+    })
+    // fetchTemplate(`/loan/save/reservation/${reservationId}/${copyId}`, "POST", jwt)
     navigate("/reservations")
   };
 
