@@ -51,6 +51,22 @@ export const BookDetailsDashboard = () => {
     });
   }
 
+  const handleReservationClick = () => {
+    fetchTemplate("/user/reservations", "GET", jwt).then((r) => {
+      let bookAlreadyReserved = false;
+      r.map((res) => {
+        if (res.bookIsbn === bookDetails.isbn) {
+          bookAlreadyReserved = true;
+        }
+      });
+      if (bookAlreadyReserved) {
+        alert("U heeft dit boek al gereserveerd");
+      } else {
+        createReservation(bookDetails);
+      }
+    });
+  };
+
   let fetchBook = () => {
     fetchTemplate(`/book/${id}`, "GET", jwt).then((data) => {
       setBookDetails(data);
@@ -133,9 +149,7 @@ export const BookDetailsDashboard = () => {
                   alignSelf: "center",
                   justifySelf: "center",
                 }}
-                onClick={() => {
-                  addReservationClick(bookDetails);
-                }}
+                onClick={handleReservationClick}
               >
                 <h3>Reserveer!</h3>
               </button>

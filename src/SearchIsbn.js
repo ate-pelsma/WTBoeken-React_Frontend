@@ -59,6 +59,7 @@ export const SearchIsbn = () => {
           Object.getPrototypeOf(d) === Object.prototype
         ) {
           setAlert("Onbekend ISBN nummer");
+          setBookObject(null);
         }
       });
   };

@@ -166,7 +166,7 @@ export const CreateBook = ({ data, isbn, alert }) => {
                   placeholder="ISBN nummer"
                 ></input>
               </div>
-              <div>
+              <div className="form-group">
                 <label htmlFor="book-author">Boek Auteur</label>
                 <input
                   value={newBook.author}
@@ -177,7 +177,7 @@ export const CreateBook = ({ data, isbn, alert }) => {
                   placeholder="Auteur"
                 ></input>
               </div>
-              <div>
+              <div className="form-group">
                 <label htmlFor="book-title">Afbeelding URL</label>
                 <input
                   value={newBook.image}
@@ -186,9 +186,10 @@ export const CreateBook = ({ data, isbn, alert }) => {
                   type="text"
                   className="form-control"
                   placeholder="Afbeelding URL"
+                  style={{ maxHeight: "40px", width: "100%" }}
                 ></input>
               </div>
-              <div>
+              <div className="form-group">
                 <label htmlFor="book-stock">Aantal</label>
                 <input
                   value={newBook.stock}

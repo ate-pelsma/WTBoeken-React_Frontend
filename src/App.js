@@ -16,6 +16,7 @@ import { UserEdit } from "./UserEdit";
 import { LoanByReservation } from "./LoanByReservation";
 import { LoanByCopy } from "./LoanByCopy";
 import { MyBooks } from "./MyBooks";
+import { CopyDetailsView } from "./CopyDetailsView";
 
 function App() {
   return (
@@ -125,6 +126,14 @@ function App() {
             element={
               <PrivateRoute>
                 <MyBooks />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/copy/details/:id"
+            element={
+              <PrivateRoute>
+                <CopyDetailsView />
               </PrivateRoute>
             }
           />
