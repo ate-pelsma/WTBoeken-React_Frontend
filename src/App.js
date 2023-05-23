@@ -13,6 +13,7 @@ import { UserCreate } from "./UserCreate";
 import { BookDetailsDashboard } from "./BookDetailsDashboard";
 import { UserDetails } from "./UserDetails";
 import { UserEdit } from "./UserEdit";
+import { UserSelf } from "./UserSelf";
 import { LoanByReservation } from "./LoanByReservation";
 import { LoanByCopy } from "./LoanByCopy";
 import { ReservationView } from "./ReservationView";
@@ -93,6 +94,14 @@ function App() {
             element={
               <PrivateRoute>
                 <UserDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users/self"
+            element={
+              <PrivateRoute>
+                <UserSelf />
               </PrivateRoute>
             }
           />

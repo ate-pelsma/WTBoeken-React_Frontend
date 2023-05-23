@@ -32,7 +32,7 @@ export default function NavBar() {
           <Nav.Link href="/MyReservations" className="navLinks">
             Mijn Reserveringen
           </Nav.Link>
-          <Nav.Link href="/MyAccount" className="navLinks">
+          <Nav.Link href="/users/self" className="navLinks">
             Mijn Account
           </Nav.Link>
           <Nav.Link href="/books" className="navLinks">
