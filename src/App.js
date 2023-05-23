@@ -13,10 +13,12 @@ import { UserCreate } from "./UserCreate";
 import { BookDetailsDashboard } from "./BookDetailsDashboard";
 import { UserDetails } from "./UserDetails";
 import { UserEdit } from "./UserEdit";
+import { UserSelf } from "./UserSelf";
 import { LoanByReservation } from "./LoanByReservation";
 import { LoanByCopy } from "./LoanByCopy";
 import { MyBooks } from "./MyBooks";
 import { CopyDetailsView } from "./CopyDetailsView";
+import { ReservationView } from "./ReservationView";
 
 function App() {
   return (
@@ -98,10 +100,23 @@ function App() {
             }
           />
           <Route
+            path="/users/self"
+            element={
+              <PrivateRoute>
+                <UserSelf />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/users/edit/:id"
             element={
               <PrivateRoute>
                 <UserEdit />
+                </PrivateRoute>
+                 } />
+              <Route path="/reservations" element={
+                <PrivateRoute>
+                <ReservationView />
               </PrivateRoute>
             }
           />

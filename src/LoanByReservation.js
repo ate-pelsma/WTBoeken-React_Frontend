@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useLocalState } from "./utils/setLocalStorage";
 import { useState, useEffect } from "react";
 import { WarningModal } from "./WarningModal";
@@ -7,69 +7,79 @@ import fetchTemplate from "./Services/FetchTemplate";
 import { Available } from "./Available";
 
 export const LoanByReservation = () => {
-  const { id } = useParams();
-  const [loadingStatus, setLoadingStatus] = useState(false);
-  const navigate = useNavigate();
-  const [jwt, setJwt] = useLocalState("", "jwt");
-  const [reservationData, setReservationData] = useState([]);
-  const [reservationId, setReservationId] = useState([]);
-  const [username, setUsername] = useState([]);
-  const [book, setBook] = useState([]);
-  const [copysAvailable, setCopysAvailable] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [modalElement, setModalElement] = useState("");
+  const { id } = useParams()
+  const [loadingStatus, setLoadingStatus] = useState(false)
+  const navigate = useNavigate()
+  const [jwt, setJwt] = useLocalState("", "jwt")
+  const [reservationData, setReservationData] = useState([])
+  const [bookData, setBookData] = useState([])
+  const [userData, setUserData] = useState([])
+  const [copysAvailable, setCopysAvailable] = useState([])
+  const [showModal, setShowModal] = useState(false)
+  const [modalElement, setModalElement] = useState("")
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
   const handleLoanClick = (copyData, reservationId) => {
-    console.log(reservationId);
     setModalElement(
       <WarningModal
         toggleModal={setShowModal}
         setAction={() => makeLoan(copyData.id, reservationId)}
-        modalText={`Exemplaar ${copyData.copyNumber} van ${book.title} toewijzen aan ${username}?`}
+        modalText={`Exemplaar ${copyData.copyNumber} van ${bookData.title} toewijzen aan ${userData.name}?`}
       />
     );
     setShowModal(true);
   };
 
   const makeLoan = (copyId, reservationId) => {
-    console.log(copyId, reservationId);
     // fetchTemplate(
     //   `/book/${reservationData.book.id}/copy/available`,
     //   "POST",
     //   jwt,
     //   (copy, user)
     // );
+
+    fetch(`http://localhost:8080/loan/save/reservation/${reservationId}/${copyId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+    },
+    method: "POST",
+    })
+    // fetchTemplate(`/loan/save/reservation/${reservationId}/${copyId}`, "POST", jwt)
+    navigate("/reservations")
   };
 
-  let fetchReservation = () => {
-    fetchTemplate(`/reservations/${id}`, "GET", jwt).then((data) => {
-      setReservationData(data);
-      const { id, book, username } = data;
-      setReservationId(id);
-      setBook(book);
-      setUsername(username);
-    });
-  };
-
-  let fetchAvailableCopies = () => {
-    fetchTemplate(`/book/${book.id}/copy/available`, "GET", jwt).then(
-      (data) => {
-        setCopysAvailable(data);
-      }
-    );
-  };
+  let fetchData = () => {
+    const url = `/reservation/${id}`;
+    fetchTemplate(url, "GET", jwt)
+      .then(data => {
+        setReservationData(data)
+        
+        return Promise.all([
+          fetchTemplate(`/book/${data.bookid}`, "GET", jwt),
+          fetchTemplate(`/user/${data.userid}`, "GET", jwt),
+        ]);
+      })
+      .then(([bookData, userData]) => {
+        setBookData(bookData)
+        setUserData(userData)
+        fetchTemplate(`/book/${bookData.id}/copy/available`, "GET", jwt).then(r => setCopysAvailable(r))
+      })
+      .catch(error => {
+        console.error('Error fetching reservation:', error);
+      });
+  }
 
   useEffect(() => {
-    fetchReservation();
+    fetchData();
   }, []);
 
   useEffect(() => {
     if (Object.keys(reservationData).length) {
-      fetchAvailableCopies();
+      // fetchAvailableCopies();  
       setLoadingStatus(true);
     }
   }, [reservationData]);
@@ -78,7 +88,7 @@ export const LoanByReservation = () => {
     <Available
       key={copy.id}
       data={copy}
-      reservationId={reservationId}
+      reservationId={id}
       handleLoanClick={handleLoanClick}
     />
   ));
@@ -95,16 +105,16 @@ export const LoanByReservation = () => {
           <table className="table table-bordered table-striped align-middle text-center">
             <thead>
               <tr>
-                <th>Reservering van</th>
-                <th>Reserverings datum</th>
-                <th>Boek Titel</th>
+                <th>Gebruiker</th>
+                <th>Boek</th>
+                <th>Aanvraagdatum</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{username}</td>
+                <td><span className="pointer-hover" onClick={() => navigate(`/users/details/${userData.id}`)}>{userData.name}</span></td>
+                <td><span className="pointer-hover" onClick={() => navigate(`/books/details/${bookData.id}`)}>{bookData.title}</span></td>
                 <td>{reservationData.reqDate}</td>
-                <td>{book.title}</td>
               </tr>
             </tbody>
           </table>
@@ -125,12 +135,12 @@ export const LoanByReservation = () => {
         <div className="col-6 justify-content-center">
           {copysAvailable.length === 0 ? (
             <h2 className="text-center">
-              Er zijn momenteel geen exemplaren beschikbaar van "{book.title}"
+              Er zijn momenteel geen exemplaren beschikbaar van "{bookData.title}"
             </h2>
           ) : (
             <>
               <h2 className="text-center" style={{ marginBottom: "2rem" }}>
-                Exemplaren beschikbaar van: "{book.title}"
+                Beschikbare exemplaren:
               </h2>
               <table className="table table-bordered table-striped align-middle text-center">
                 <thead>

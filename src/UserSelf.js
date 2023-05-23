@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useLocalState } from "./utils/setLocalStorage";
-import { useNavigate } from "react-router-dom";
 
-export const UserCreate = () => {
+export const UserSelf = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [userData, setUserData] = useState({
     name: "",
     username: "",
     password: "",
-    confirmPassword: "",
-    permissions: "",
-    checked: false,
   });
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   username: "",
+  //   password: "",
+  // });
 
   const handleChange = (e) => {
-    const { name, value, checked } = e.target;
-    formData.permissions = checked ? "ROLE_ADMIN" : "ROLE_USER";
+    const { name, value } = e.target;
 
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       [name]: value,
     });
   };
@@ -27,19 +27,35 @@ export const UserCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let { checked, confirmPassword, ...userData } = formData;
-
-    fetch("http://localhost:8080/user/save", {
+    fetch("http://localhost:8080/user/update", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
       },
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(userData),
     });
 
-    navigate("/users");
+    window.location.href = "http://localhost:3000/users";
   };
+
+  const fetchUser = () => {
+    fetch("http://localhost:8080/user/self", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      method: "GET",
+    })
+      .then((r) => r.json())
+      .then((d) => {
+        setUserData(d)
+        console.log(d)
+        console.log("test")
+      });
+  };
+
+  useEffect(() => fetchUser(), [])
 
   return (
     <div className="container">
@@ -50,10 +66,11 @@ export const UserCreate = () => {
           </label>
           <input
             type="text"
+            placeholder={userData.name}
             className="form-control"
             id="name"
             name="name"
-            value={formData.name}
+            value={userData.name}
             onChange={handleChange}
           />
         </div>
@@ -63,10 +80,11 @@ export const UserCreate = () => {
           </label>
           <input
             type="email"
+            placeholder={userData.username}
             className="form-control"
             id="email"
             name="username"
-            value={formData.username}
+            value={userData.email}
             onChange={handleChange}
           />
         </div>
@@ -79,7 +97,6 @@ export const UserCreate = () => {
             className="form-control"
             id="password"
             name="password"
-            value={formData.password}
             onChange={handleChange}
             required="required"
             pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"
@@ -93,28 +110,15 @@ export const UserCreate = () => {
             className="form-control"
             id="confirmPassword"
             name="confirmPassword"
-            value={formData.confirmPassword}
+            value={userData.confirmPassword}
             onChange={handleChange}
             required="required"
-            pattern={`^${formData.password}$`}
+            pattern={`^${userData.password}$`}
             title="Wachtwoorden komen niet overeen"
           />
         </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="checkbox"
-            name="checked"
-            checked={formData.checked}
-            onChange={handleChange}
-          />
-          <label className="form-check-label" htmlFor="checkbox">
-            Admin?
-          </label>
-        </div>
         <button type="submit" className="buttonGreen">
-          Aanmaken
+          Bewerken
         </button>
       </form>
     </div>
