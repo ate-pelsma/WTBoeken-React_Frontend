@@ -65,7 +65,7 @@ export default function NavBar() {
           <Nav.Link href="/mybooks" className="navLinks">
             Mijn Boeken
           </Nav.Link>
-          <Nav.Link href="/MyAccount" className="navLinks">
+          <Nav.Link href="/users/self" className="navLinks">
             Mijn Account
           </Nav.Link>
           <Nav.Link href="#" className="navLinks" onClick={logOutClick}>

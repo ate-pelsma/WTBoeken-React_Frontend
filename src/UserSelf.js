@@ -27,6 +27,8 @@ export const UserSelf = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    console.log(userData)
+
     fetch("http://localhost:8080/user/update", {
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +37,7 @@ export const UserSelf = () => {
       method: "PUT",
       body: JSON.stringify(userData),
     });
-    
+
     setJwt(null);
     localStorage.setItem("jwt", null);
     window.location.href = "/login";
@@ -50,11 +52,7 @@ export const UserSelf = () => {
       method: "GET",
     })
       .then((r) => r.json())
-      .then((d) => {
-        setUserData(d)
-        console.log(d)
-        console.log("test")
-      });
+      .then((d) => setUserData(d));
   };
 
   useEffect(() => fetchUser(), [])
@@ -72,7 +70,6 @@ export const UserSelf = () => {
             className="form-control"
             id="name"
             name="name"
-            value={userData.name}
             onChange={handleChange}
           />
         </div>
@@ -86,13 +83,12 @@ export const UserSelf = () => {
             className="form-control"
             id="email"
             name="username"
-            value={userData.email}
             onChange={handleChange}
           />
         </div>
         <div className="mb-3">
           <label htmlFor="passwordInput" className="form-label">
-            Wachtwoord
+            Huidig of nieuw wachtwoord
           </label>
           <input
             type="password"
@@ -112,9 +108,8 @@ export const UserSelf = () => {
             className="form-control"
             id="confirmPassword"
             name="confirmPassword"
-            value={userData.confirmPassword}
-            onChange={handleChange}
             required="required"
+            onChange={handleChange}
             pattern={`^${userData.password}$`}
             title="Wachtwoorden komen niet overeen"
           />
