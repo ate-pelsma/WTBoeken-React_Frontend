@@ -35,8 +35,10 @@ export const UserSelf = () => {
       method: "PUT",
       body: JSON.stringify(userData),
     });
-
-    window.location.href = "http://localhost:3000/users";
+    
+    setJwt(null);
+    localStorage.setItem("jwt", null);
+    window.location.href = "/login";
   };
 
   const fetchUser = () => {
