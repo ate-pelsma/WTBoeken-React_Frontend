@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLocalState } from "./utils/setLocalStorage";
 import fetchTemplate from "./Services/FetchTemplate";
+import { useNavigate } from "react-router-dom";
 
 export const MyBooks = () => {
   const [reservationData, setReservationData] = useState([]);
   const [activeLoans, setActiveLoans] = useState([]);
   const [loanHistory, setLoanHistory] = useState([]);
   const [jwt, setJwt] = useLocalState("", "jwt");
+  const navigate = useNavigate();
 
   const fetchReservations = () => {
     fetchTemplate("/user/reservations", "GET", jwt).then((r) =>
@@ -49,7 +51,10 @@ export const MyBooks = () => {
 
   const reservationElements = reservationData.map((res) => {
     return (
-      <tr key={res.reservationId}>
+      <tr
+        key={res.reservationId}
+        onClick={() => navigate("/dashboard/books/details/" + res.bookId)}
+      >
         <td>{res.date}</td>
         <td>{res.bookTitle}</td>
         <td>{res.bookAuthor}</td>
