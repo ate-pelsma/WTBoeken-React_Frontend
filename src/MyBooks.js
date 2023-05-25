@@ -54,6 +54,7 @@ export const MyBooks = () => {
       <tr
         key={res.reservationId}
         onClick={() => navigate("/dashboard/books/details/" + res.bookId)}
+        className="pointer-hover"
       >
         <td>{res.date}</td>
         <td>{res.bookTitle}</td>

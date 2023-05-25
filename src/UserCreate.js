@@ -36,9 +36,9 @@ export const UserCreate = () => {
       },
       method: "POST",
       body: JSON.stringify(userData),
+    }).then(() => {
+      navigate("/users");
     });
-
-    navigate("/users");
   };
 
   return (
@@ -87,7 +87,9 @@ export const UserCreate = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="passwordConfirmInput" className="form-label">Wachtwoord bevestigen</label>
+          <label htmlFor="passwordConfirmInput" className="form-label">
+            Wachtwoord bevestigen
+          </label>
           <input
             type="password"
             className="form-control"

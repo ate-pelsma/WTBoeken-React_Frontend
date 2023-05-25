@@ -6,7 +6,7 @@ export const UserEdit = () => {
   const { id } = useParams();
   const [user, setUser] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -37,9 +37,7 @@ export const UserEdit = () => {
       },
       method: "PUT",
       body: JSON.stringify(userData),
-    });
-
-    navigate("/users")
+    }).then(() => navigate("/users"));
   };
 
   const fetchUser = () => {
@@ -54,7 +52,7 @@ export const UserEdit = () => {
       .then((d) => setUser(d));
   };
 
-  useEffect(() => fetchUser(), [])
+  useEffect(() => fetchUser(), []);
 
   return (
     <div className="container">
@@ -104,7 +102,9 @@ export const UserEdit = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="passwordConfirmInput" className="form-label">Wachtwoord bevestigen</label>
+          <label htmlFor="passwordConfirmInput" className="form-label">
+            Wachtwoord bevestigen
+          </label>
           <input
             type="password"
             className="form-control"
