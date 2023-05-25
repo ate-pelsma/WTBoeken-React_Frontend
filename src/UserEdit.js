@@ -87,7 +87,7 @@ export const UserEdit = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="passwordInput" className="form-label">
-            Wachtwoord
+            Huidig of nieuw wachtwoord
           </label>
           <input
             type="password"
